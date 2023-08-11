@@ -30,12 +30,12 @@ export const Statistics = ({
       </StatsItem>
       <TotalItem>
         <ItemLabel>Total</ItemLabel>
-        <ItemValue>{totalFeedback}</ItemValue>
+        <ItemValue>{totalFeedback()}</ItemValue>
       </TotalItem>
       <TotalItem>
         <ItemLabel>Positive Feedback</ItemLabel>
         <ItemValue>
-          {positiveFeedbackPercent ? positiveFeedbackPercent + '%' : 0}
+          {positiveFeedbackPercent() ? positiveFeedbackPercent() + '%' : 0}
         </ItemValue>
       </TotalItem>
     </List>
