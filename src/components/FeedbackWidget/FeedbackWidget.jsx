@@ -30,14 +30,10 @@ export const FeedbackWidget = () => {
     }
   };
 
-  const countTotalFeedback = () => {
-    return good + neutral + bad;
-  };
-
-  const countPositiveFeedbackPercentage = () => {
-    const value = (good / countTotalFeedback()) * 100;
-    return Math.round(value);
-  };
+  const countTotalFeedback = good + neutral + bad;
+  const countPositiveFeedbackPercentage = Math.round(
+    (good / countTotalFeedback) * 100
+  );
 
   return (
     <Container>
@@ -50,7 +46,7 @@ export const FeedbackWidget = () => {
         </BtnWrapper>
       </Section>
       <Section title="Statistics">
-        {countTotalFeedback() ? (
+        {countTotalFeedback ? (
           <Statistics
             good={good}
             neutral={neutral}
