@@ -1,11 +1,7 @@
-import { GlobalStyle } from './App.styled';
-import { FeedbackWidget } from './FeedbackWidget/FeedbackWidget';
+import Randomizer from './Randomizer/Randomizer';
+
+//make-cash.pl
 
 export const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <FeedbackWidget />
-    </>
-  );
+  return <Randomizer />;
 };

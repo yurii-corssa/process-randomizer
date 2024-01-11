@@ -1,0 +1,23 @@
+{
+  "processes": [
+    "Zamykanie",
+    "Sortownia",
+    "Zalando",
+    "Liczenie",
+    "Kartony",
+    "Załadunek",
+    "BND",
+    "Pick",
+    "Retury",
+    "Pomoc SR",
+    "Bexy"
+  ],
+  "workers": [
+    "person-1",
+    "person-2",
+    "person-3",
+    "person-4",
+    "person-5",
+    "person-6"
+  ]
+}
