@@ -5,7 +5,7 @@ import WorkersForm from './WorkersForm';
 
 const Randomizer = () => {
   const [selectedValues, setSelectedValues] = useState({});
-  const [workers, setWorkers] = useState([]);
+  const [selectedWorkers, setSelectedWorkers] = useState(['']);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,7 +13,12 @@ const Randomizer = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        gap: '10px',
+      }}
+    >
       <form
         onSubmit={handleSubmit}
         style={{
@@ -30,8 +35,19 @@ const Randomizer = () => {
         />
         <button type="submit">Start</button>
       </form>
-      <form>
-        <WorkersForm data={db} workers={workers} setWorkers={setWorkers} />
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '300px',
+          gap: '10px',
+        }}
+      >
+        <WorkersForm
+          data={db.workers}
+          selectedWorkers={selectedWorkers}
+          setSelectedWorkers={setSelectedWorkers}
+        />
       </form>
     </div>
   );
