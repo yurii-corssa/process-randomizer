@@ -1,7 +1,6 @@
 {
   "processes": [
     { "value": "Zamykanie" },
-    { "value": "Sortownia" },
     { "value": "Zalando" },
     { "value": "Liczenie" },
     { "value": "Kartony" },
@@ -10,14 +9,28 @@
     { "value": "Pick" },
     { "value": "Retury" },
     { "value": "Pomoc SR" },
+    { "value": "Audyt" },
+    { "value": "Loose Loading" },
     { "value": "Bexy" }
   ],
   "workers": [
-    { "value": "person-1", "selected": false },
-    { "value": "person-2", "selected": false },
-    { "value": "person-3", "selected": false },
-    { "value": "person-4", "selected": false },
-    { "value": "person-5", "selected": false },
-    { "value": "person-6", "selected": false }
+    { "value": "Andriushchenko Heorhii", "selected": false },
+    { "value": "Baziuk Roman", "selected": false },
+    { "value": "Bobrakov Serhii", "selected": false },
+    { "value": "Chkheidze Koba", "selected": false },
+    { "value": "Donskyi Ivan", "selected": false },
+    { "value": "Khachatrian Romani", "selected": false },
+    { "value": "Kuzmin Serhii", "selected": false },
+    { "value": "Maruszyński Piotr", "selected": false },
+    { "value": "Maślak Dariusz", "selected": false },
+    { "value": "Sakharskyi Mykola", "selected": false },
+    { "value": "Suslo Oleksandr", "selected": false },
+    { "value": "Tantsiura Volodymyr", "selected": false },
+    { "value": "Tokar Vladyslav", "selected": false },
+    { "value": "Tsyhanok Yurii", "selected": false },
+    { "value": "Ukrainets Anatolii", "selected": false },
+    { "value": "Vasyliv Oleh", "selected": false },
+    { "value": "Zavada Mykhailo", "selected": false },
+    { "value": "Zayats Uladzislau", "selected": false }
   ]
 }
