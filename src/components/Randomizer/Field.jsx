@@ -27,7 +27,7 @@ const Field = ({ field, data, onChange, label, disabled }) => {
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
-      ></button>
+      />
       <ul className="dropdown-menu dropdown-menu-end">
         <FieldOptions options={data} onSelect={handleSelectValue} />
       </ul>
