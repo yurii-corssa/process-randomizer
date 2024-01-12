@@ -1,23 +1,23 @@
 {
   "processes": [
-    "Zamykanie",
-    "Sortownia",
-    "Zalando",
-    "Liczenie",
-    "Kartony",
-    "Załadunek",
-    "BND",
-    "Pick",
-    "Retury",
-    "Pomoc SR",
-    "Bexy"
+    { "value": "Zamykanie" },
+    { "value": "Sortownia" },
+    { "value": "Zalando" },
+    { "value": "Liczenie" },
+    { "value": "Kartony" },
+    { "value": "Załadunek" },
+    { "value": "BND" },
+    { "value": "Pick" },
+    { "value": "Retury" },
+    { "value": "Pomoc SR" },
+    { "value": "Bexy" }
   ],
   "workers": [
-    { "name": "person-1", "disabled": false },
-    { "name": "person-2", "disabled": false },
-    { "name": "person-3", "disabled": false },
-    { "name": "person-4", "disabled": false },
-    { "name": "person-5", "disabled": false },
-    { "name": "person-6", "disabled": false }
+    { "value": "person-1", "selected": false },
+    { "value": "person-2", "selected": false },
+    { "value": "person-3", "selected": false },
+    { "value": "person-4", "selected": false },
+    { "value": "person-5", "selected": false },
+    { "value": "person-6", "selected": false }
   ]
 }

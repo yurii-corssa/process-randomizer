@@ -1,41 +1,27 @@
-import { useState } from 'react';
-import SelectProcces from './SelectProcces';
-import { nanoid } from 'nanoid';
+import Field from './Field';
 
-const ProcessesForm = ({ data, selectedValues, setSelectedValues }) => {
-  const [selectIds, setSelectIds] = useState([]);
-
-  const addSelect = () => {
-    const newId = nanoid();
-    setSelectIds(ids => [...ids, newId]);
-    setSelectedValues(values => ({
-      ...values,
-      [newId]: { process: null, workers: null },
-    }));
-  };
-
-  const handleSelectChange = (id, value) => {
-    setSelectedValues(values => ({
-      ...values,
-      [id]: { process: value, workers: null },
-    }));
-  };
-
+const ProcessesForm = ({ data, fields, addField, onChange }) => {
   return (
-    <>
-      {selectIds.map(id => (
-        <SelectProcces
-          key={id}
-          id={id}
-          value={selectedValues[id].process || ''}
-          onChange={handleSelectChange}
-          processes={data.processes}
-        />
-      ))}
-      <button type="button" onClick={addSelect}>
-        +
-      </button>
-    </>
+    <form>
+      {fields.map(field => {
+        return (
+          <Field
+            key={field.id}
+            field={field}
+            data={data}
+            onChange={onChange}
+            label="Process"
+            disabled={true}
+          />
+        );
+      })}
+
+      <div className="d-grid gap-2">
+        <button type="button" className="btn btn-primary" onClick={addField}>
+          +
+        </button>
+      </div>
+    </form>
   );
 };
 

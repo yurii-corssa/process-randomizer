@@ -1,13 +1,16 @@
+import { nanoid } from 'nanoid';
+
 const FieldOptions = ({ options, onSelect }) => {
   return options.map(option => {
     return (
-      <li key={option.name}>
+      <li key={nanoid()}>
         <button
           className="dropdown-item"
           type="button"
-          onClick={() => onSelect(option.name)}
+          onClick={() => onSelect(option.value)}
+          disabled={option.selected}
         >
-          {option.name}
+          {option.value}
         </button>
       </li>
     );
