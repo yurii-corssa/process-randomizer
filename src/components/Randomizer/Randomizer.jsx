@@ -64,10 +64,6 @@ const Randomizer = () => {
     );
   };
 
-  /* ---------------------------------- */
-  /* ---------------------------------- */
-  /* ---------------------------------- */
-
   const runRundomize = () => {
     const selectedWorkers = workerFields
       .filter(worker => worker.value)
