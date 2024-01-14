@@ -14,6 +14,7 @@ const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
               onChange={onChange}
               label="Worker"
               onDelete={onDelete}
+              lastField={fields.length <= 1}
             />
           );
         })}
