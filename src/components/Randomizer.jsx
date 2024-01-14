@@ -64,8 +64,13 @@ const Randomizer = () => {
     );
   };
 
-  const handleDeleteWorker = id => {
+  const handleDeleteWorker = (id, value) => {
     setWorkerFields(workerFields.filter(worker => worker.id !== id));
+    setDataWorkers(
+      dataWorkers.map(worker =>
+        worker.value === value ? { ...worker, selected: false } : worker
+      )
+    );
   };
 
   const handleDeleteProcess = id => {

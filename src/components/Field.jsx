@@ -11,7 +11,7 @@ const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
   };
 
   const handleDelete = () => {
-    onDelete(field.id);
+    onDelete(field.id, field.value);
   };
 
   return (
