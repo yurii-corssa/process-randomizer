@@ -117,7 +117,7 @@ const Randomizer = () => {
     <div>Loading...</div>
   ) : (
     <>
-      <section className="container p-5 d-flex flex-column gap-5">
+      <section className="container p-3 d-flex flex-column gap-4">
         <div className="d-flex gap-5 justify-content-center">
           <ProcessesForm
             data={dataProcesses}

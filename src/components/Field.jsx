@@ -26,7 +26,7 @@ const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
         onChange={handleChange}
       />
       <button
-        className="btn btn-primary d-flex align-items-center"
+        className="btn btn-outline-secondary d-flex align-items-center"
         id="button-addon2"
         type="button"
         data-bs-toggle="dropdown"
@@ -39,7 +39,7 @@ const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
         <FieldOptions options={data} onSelect={handleSelectValue} />
       </ul>
       <button
-        className="btn btn-primary d-flex align-items-center"
+        className="btn btn-outline-secondary d-flex align-items-center"
         type="button"
         onClick={handleDelete}
         disabled={lastField}

@@ -1,13 +1,13 @@
-$body-bg: #eceff4;
+$body-bg: #d8dee9;
 $body-color: #2e3440;
 $input-bg: #e5e9f0;
 $input-disabled-bg: #d8dee9;
-$border-color: #d8dee9;
-// $black: #4c566a;
+$border-color: #667080;
+$dropdown-link-active-bg: #667080;
 
 $theme-colors: (
   'primary': #4c566a,
-  'secondary': #5e81ac,
+  'secondary': #667080,
   'success': #8fbcbb,
   'info': #88c0d0,
   'warning': #ebcb8b,
@@ -18,6 +18,34 @@ $theme-colors: (
 
 @import '~bootstrap/scss/bootstrap';
 
-.container {
-  padding: 20px;
+.form-container {
+  padding: 25px 15px;
+  border-radius: 15px;
+  background-color: #eceff4;
+}
+
+.fields-container {
+  height: 40vh;
+  padding: 5px;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}
+
+.dropdown {
+  position: static;
+}
+
+.input-group {
+  position: static;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.table {
+  border-radius: 15px;
 }

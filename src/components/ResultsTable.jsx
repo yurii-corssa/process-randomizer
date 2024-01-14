@@ -3,7 +3,7 @@ import TableItem from './TableItem';
 const ResultsTable = ({ data }) => {
   return (
     <table className="table table-striped table-hover table-bordered w-50">
-      <thead className="table-dark">
+      <thead>
         <tr>
           <th scope="col">Process</th>
           <th scope="col">Worker</th>
