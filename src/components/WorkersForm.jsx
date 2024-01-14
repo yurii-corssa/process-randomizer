@@ -1,6 +1,7 @@
 import Field from './Field.jsx';
+import { LuPlus } from 'react-icons/lu';
 
-const WorkersForm = ({ data, fields, addField, onChange }) => {
+const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
   return (
     <form>
       {fields.map(field => {
@@ -11,13 +12,14 @@ const WorkersForm = ({ data, fields, addField, onChange }) => {
             data={data}
             onChange={onChange}
             label="Worker"
+            onDelete={onDelete}
           />
         );
       })}
 
       <div className="d-grid gap-2">
         <button type="button" className="btn btn-primary" onClick={addField}>
-          +
+          <LuPlus />
         </button>
       </div>
     </form>

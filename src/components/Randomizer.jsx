@@ -64,6 +64,14 @@ const Randomizer = () => {
     );
   };
 
+  const handleDeleteWorker = id => {
+    setWorkerFields(workerFields.filter(worker => worker.id !== id));
+  };
+
+  const handleDeleteProcess = id => {
+    setProcessFields(processFields.filter(process => process.id !== id));
+  };
+
   const runRundomize = () => {
     const selectedWorkers = workerFields
       .filter(worker => worker.value)
@@ -116,12 +124,14 @@ const Randomizer = () => {
             fields={processFields}
             addField={addProcessField}
             onChange={handleChangeProcess}
+            onDelete={handleDeleteProcess}
           />
           <WorkersForm
             data={dataWorkers}
             fields={workerFields}
             addField={addWorkerField}
             onChange={handleChangeWorker}
+            onDelete={handleDeleteWorker}
           />
         </div>
         <div className="d-flex justify-content-center">

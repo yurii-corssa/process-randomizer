@@ -1,6 +1,7 @@
 import Field from './Field';
+import { LuPlus } from 'react-icons/lu';
 
-const ProcessesForm = ({ data, fields, addField, onChange }) => {
+const ProcessesForm = ({ data, fields, addField, onChange, onDelete }) => {
   return (
     <form>
       {fields.map(field => {
@@ -11,13 +12,15 @@ const ProcessesForm = ({ data, fields, addField, onChange }) => {
             data={data}
             onChange={onChange}
             label="Process"
+            onDelete={onDelete}
+            lastField={fields.length <= 1}
           />
         );
       })}
 
       <div className="d-grid gap-2">
         <button type="button" className="btn btn-primary" onClick={addField}>
-          +
+          <LuPlus />
         </button>
       </div>
     </form>
