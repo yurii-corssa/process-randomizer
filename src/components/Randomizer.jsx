@@ -102,12 +102,12 @@ const Randomizer = () => {
       worker,
     }));
 
-    const ahaha = [{ process: 'Zamiatanie', worker: 'Korbut Artem' }];
+    // const ahaha = [{ process: 'Zamiatanie', worker: 'Korbut Artem' }];
 
     const finalResult = [
       ...iteratedProcesses,
       ...iteratedRemainingWorker,
-      ...ahaha,
+      // ...ahaha,
     ];
 
     setRandomValues(finalResult);
