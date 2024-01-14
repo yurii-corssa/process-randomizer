@@ -11,7 +11,6 @@ const WorkersForm = ({ data, fields, addField, onChange }) => {
             data={data}
             onChange={onChange}
             label="Worker"
-            disabled={false}
           />
         );
       })}

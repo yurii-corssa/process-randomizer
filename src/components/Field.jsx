@@ -1,6 +1,6 @@
 import FieldOptions from './FieldOptions';
 
-const Field = ({ field, data, onChange, label, disabled }) => {
+const Field = ({ field, data, onChange, label }) => {
   const handleChange = e => {
     onChange(field.id, e.target.value);
   };
@@ -19,10 +19,9 @@ const Field = ({ field, data, onChange, label, disabled }) => {
         aria-describedby="button-addon2"
         value={field.value}
         onChange={handleChange}
-        disabled={disabled}
       />
       <button
-        className="btn btn-secondary dropdown-toggle"
+        className="btn btn-primary dropdown-toggle"
         id="button-addon2"
         type="button"
         data-bs-toggle="dropdown"

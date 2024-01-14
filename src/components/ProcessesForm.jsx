@@ -11,7 +11,6 @@ const ProcessesForm = ({ data, fields, addField, onChange }) => {
             data={data}
             onChange={onChange}
             label="Process"
-            disabled={true}
           />
         );
       })}

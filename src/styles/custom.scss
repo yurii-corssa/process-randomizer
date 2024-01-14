@@ -1,0 +1,23 @@
+$body-bg: #eceff4;
+$body-color: #2e3440;
+$input-bg: #e5e9f0;
+$input-disabled-bg: #d8dee9;
+$border-color: #d8dee9;
+// $black: #4c566a;
+
+$theme-colors: (
+  'primary': #81a1c1,
+  'secondary': #5e81ac,
+  'success': #8fbcbb,
+  'info': #88c0d0,
+  'warning': #ebcb8b,
+  'danger': #bf616a,
+  'light': #d8dee9,
+  'dark': #4c566a,
+);
+
+@import '~bootstrap/scss/bootstrap';
+
+.container {
+  padding: 20px;
+}
