@@ -49,11 +49,6 @@ const Randomizer = () => {
         worker.id === id ? { ...worker, value } : worker
       )
     );
-    setDataWorkers(
-      dataWorkers.map(worker =>
-        worker.value === value ? { ...worker, selected: true } : worker
-      )
-    );
   };
 
   const handleChangeProcess = (id, value) => {
@@ -66,11 +61,6 @@ const Randomizer = () => {
 
   const handleDeleteWorker = (id, value) => {
     setWorkerFields(workerFields.filter(worker => worker.id !== id));
-    setDataWorkers(
-      dataWorkers.map(worker =>
-        worker.value === value ? { ...worker, selected: false } : worker
-      )
-    );
   };
 
   const handleDeleteProcess = id => {

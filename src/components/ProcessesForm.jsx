@@ -5,16 +5,18 @@ const ProcessesForm = ({ data, fields, addField, onChange, onDelete }) => {
   return (
     <form className="form-container">
       <div className="fields-container">
-        {fields.map(field => {
+        {fields.map(({ id, value }) => {
           return (
             <Field
-              key={field.id}
-              field={field}
-              data={data}
-              onChange={onChange}
+              key={id}
               label="Process"
+              id={id}
+              value={value}
+              // fields={fields}
+              data={data}
+              isLastField={fields.length <= 1}
+              onChange={onChange}
               onDelete={onDelete}
-              lastField={fields.length <= 1}
             />
           );
         })}

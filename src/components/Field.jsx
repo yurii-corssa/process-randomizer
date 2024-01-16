@@ -1,17 +1,22 @@
 import FieldOptions from './FieldOptions';
 import { LuTrash, LuChevronDown } from 'react-icons/lu';
 
-const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
+const Field = ({
+  label,
+  id,
+  value,
+  fields,
+  data,
+  isLastField,
+  onChange,
+  onDelete,
+}) => {
   const handleChange = e => {
-    onChange(field.id, e.target.value);
+    onChange(id, e.target.value);
   };
 
   const handleSelectValue = value => {
-    onChange(field.id, value);
-  };
-
-  const handleDelete = () => {
-    onDelete(field.id, field.value);
+    onChange(id, value);
   };
 
   return (
@@ -22,7 +27,7 @@ const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
         placeholder={label}
         aria-label={label}
         aria-describedby="button-addon2"
-        value={field.value}
+        value={value}
         onChange={handleChange}
       />
       <button
@@ -36,13 +41,17 @@ const Field = ({ field, data, onChange, onDelete, label, lastField }) => {
       </button>
 
       <ul className="dropdown-menu dropdown-menu-end">
-        <FieldOptions options={data} onSelect={handleSelectValue} />
+        <FieldOptions
+          options={data}
+          fields={fields ? fields : []}
+          onSelect={handleSelectValue}
+        />
       </ul>
       <button
         className="btn btn-outline-secondary d-flex align-items-center"
         type="button"
-        onClick={handleDelete}
-        disabled={lastField}
+        onClick={() => onDelete(id, value)}
+        disabled={isLastField}
       >
         <LuTrash />
       </button>
