@@ -3,7 +3,7 @@ import { LuPlus } from 'react-icons/lu';
 
 const ProcessesForm = ({ data, fields, addField, onChange, onDelete }) => {
   return (
-    <form className="form-container">
+    <form>
       <div className="fields-container">
         {fields.map(({ id, value }) => {
           return (
@@ -12,7 +12,6 @@ const ProcessesForm = ({ data, fields, addField, onChange, onDelete }) => {
               label="Process"
               id={id}
               value={value}
-              // fields={fields}
               data={data}
               isLastField={fields.length <= 1}
               onChange={onChange}

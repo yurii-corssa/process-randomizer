@@ -19,6 +19,7 @@ $theme-colors: (
 @import '~bootstrap/scss/bootstrap';
 
 .form-container {
+  width: 350px;
   padding: 25px 15px;
   border-radius: 15px;
   background-color: #eceff4;
@@ -27,6 +28,16 @@ $theme-colors: (
 .fields-container {
   height: 40vh;
   padding: 5px;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}
+
+.checks-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 40px;
+  gap: 1rem;
+  height: 40vh;
   margin-bottom: 20px;
   overflow-y: scroll;
 }
@@ -48,4 +59,11 @@ $theme-colors: (
 
 .table {
   border-radius: 15px;
+}
+
+.btn-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }

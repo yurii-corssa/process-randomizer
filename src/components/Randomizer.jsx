@@ -4,11 +4,12 @@ import ProcessesForm from './ProcessesForm';
 import WorkersForm from './WorkersForm';
 import { createField } from 'utils/createField';
 import ResultsTable from './ResultsTable';
+import FormCard from './FormCard';
+import ProcessSelection from './ProcessSelection';
 
 const initialWorkerField = {
   id: '',
   value: '',
-  selected: false,
 };
 
 const initialProcessField = {
@@ -29,7 +30,7 @@ const Randomizer = () => {
     setDataProcesses(data.processes);
     setDataWorkers(data.workers);
     addWorkerField();
-    addProcessField();
+    // addProcessField();
     setIsLoading(false);
   }, []);
 
@@ -38,8 +39,8 @@ const Randomizer = () => {
     setWorkerFields(prev => [...prev, newField]);
   };
 
-  const addProcessField = () => {
-    const newField = createField(initialProcessField);
+  const addProcessField = (data = initialProcessField) => {
+    const newField = createField(data);
     setProcessFields(prev => [...prev, newField]);
   };
 
@@ -59,7 +60,7 @@ const Randomizer = () => {
     );
   };
 
-  const handleDeleteWorker = (id, value) => {
+  const handleDeleteWorker = id => {
     setWorkerFields(workerFields.filter(worker => worker.id !== id));
   };
 
@@ -114,20 +115,25 @@ const Randomizer = () => {
     <>
       <section className="container p-3 d-flex flex-column gap-4">
         <div className="d-flex gap-5 justify-content-center">
-          <ProcessesForm
-            data={dataProcesses}
-            fields={processFields}
-            addField={addProcessField}
-            onChange={handleChangeProcess}
-            onDelete={handleDeleteProcess}
-          />
-          <WorkersForm
-            data={dataWorkers}
-            fields={workerFields}
-            addField={addWorkerField}
-            onChange={handleChangeWorker}
-            onDelete={handleDeleteWorker}
-          />
+          <FormCard>
+            <ProcessesForm
+              data={dataProcesses}
+              fields={processFields}
+              addField={addProcessField}
+              onChange={handleChangeProcess}
+              onDelete={handleDeleteProcess}
+            />
+            <ProcessSelection data={dataProcesses} addField={addProcessField} />
+          </FormCard>
+          <FormCard>
+            <WorkersForm
+              data={dataWorkers}
+              fields={workerFields}
+              addField={addWorkerField}
+              onChange={handleChangeWorker}
+              onDelete={handleDeleteWorker}
+            />
+          </FormCard>
         </div>
         <div className="d-flex justify-content-center">
           <button

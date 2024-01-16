@@ -3,7 +3,7 @@ import { LuPlus } from 'react-icons/lu';
 
 const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
   return (
-    <form className="form-container">
+    <form>
       <div className="fields-container">
         {fields.map(({ id, value }) => {
           return (
