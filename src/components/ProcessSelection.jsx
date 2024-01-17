@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { LuArrowRight } from 'react-icons/lu';
 
-const ProcessSelection = ({ data, addField }) => {
+const ProcessSelection = ({ data, fields, addField, changeStep }) => {
   const [checkedValues, setCheckedValues] = useState([]);
 
   const handleCheckboxChange = value => {
@@ -17,7 +17,16 @@ const ProcessSelection = ({ data, addField }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    checkedValues.map(value => addField({ id: nanoid(), value }));
+
+    if (!checkedValues.length && !fields.length) {
+      console.log('no');
+      addField();
+    } else {
+      console.log('yes');
+      checkedValues.map(value => addField({ id: nanoid(), value }));
+    }
+
+    changeStep(2);
   };
 
   return (
