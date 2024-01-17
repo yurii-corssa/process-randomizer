@@ -5,7 +5,8 @@ import WorkersForm from './WorkersForm';
 import { createField } from 'utils/createField';
 import ResultsTable from './ResultsTable';
 import FormCard from './FormCard';
-import ProcessSelection from './ProcessSelection';
+import ValueSelection from './ValueSelection';
+import { nanoid } from 'nanoid';
 
 const initialWorkerField = {
   id: '',
@@ -26,6 +27,8 @@ const Randomizer = () => {
   const [randomValues, setRandomValues] = useState([]);
   const [processFormStep, setProcessFormStep] = useState(1);
   const [workersFormStep, setWorkersFormStep] = useState(1);
+  const [checkedProcessValues, setCheckedProcessValues] = useState([]);
+  const [checkedWorkersValues, setCheckedWorkersValues] = useState([]);
 
   useEffect(() => {
     const data = db;
@@ -34,8 +37,8 @@ const Randomizer = () => {
     setIsLoading(false);
   }, []);
 
-  const addWorkerField = () => {
-    const newField = createField(initialWorkerField);
+  const addWorkerField = (data = initialWorkerField) => {
+    const newField = createField(data);
     setWorkerFields(prev => [...prev, newField]);
   };
 
@@ -75,7 +78,16 @@ const Randomizer = () => {
     }
 
     if (step === 2) {
-      setProcessFormStep(2);
+      if (step === 2) {
+        if (!checkedProcessValues.length && !processFields.length) {
+          addProcessField();
+        } else {
+          checkedProcessValues.map(value =>
+            addProcessField({ id: nanoid(), value })
+          );
+        }
+        setProcessFormStep(2);
+      }
     }
   };
 
@@ -86,11 +98,18 @@ const Randomizer = () => {
     }
 
     if (step === 2) {
+      if (!checkedWorkersValues.length && !workerFields.length) {
+        addWorkerField();
+      } else {
+        checkedWorkersValues.map(value =>
+          addWorkerField({ id: nanoid(), value })
+        );
+      }
       setWorkersFormStep(2);
     }
   };
 
-  const runRundomize = () => {
+  const runRundomize = async () => {
     const selectedWorkers = workerFields
       .filter(worker => worker.value)
       .map(worker => worker.value);
@@ -139,10 +158,10 @@ const Randomizer = () => {
         <div className="d-flex gap-5 justify-content-center">
           <FormCard>
             {processFormStep === 1 && (
-              <ProcessSelection
+              <ValueSelection
                 data={dataProcesses}
-                fields={processFields}
-                addField={addProcessField}
+                checkedValues={checkedProcessValues}
+                setCheckedValues={setCheckedProcessValues}
                 changeStep={handleChangeStepProcess}
               />
             )}
@@ -159,10 +178,10 @@ const Randomizer = () => {
           </FormCard>
           <FormCard>
             {workersFormStep === 1 && (
-              <ProcessSelection
+              <ValueSelection
                 data={dataWorkers}
-                fields={workerFields}
-                addField={addWorkerField}
+                checkedValues={checkedWorkersValues}
+                setCheckedValues={setCheckedWorkersValues}
                 changeStep={handleChangeStepWorkers}
               />
             )}
@@ -173,6 +192,7 @@ const Randomizer = () => {
                 addField={addWorkerField}
                 onChange={handleChangeWorker}
                 onDelete={handleDeleteWorker}
+                changeStep={handleChangeStepWorkers}
               />
             )}
           </FormCard>
@@ -182,6 +202,7 @@ const Randomizer = () => {
             type="button"
             className="btn btn-primary w-25"
             onClick={runRundomize}
+            disabled={processFormStep !== 2 || workersFormStep !== 2}
           >
             Go
           </button>

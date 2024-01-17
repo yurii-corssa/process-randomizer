@@ -1,7 +1,14 @@
 import Field from './Field.jsx';
-import { LuPlus } from 'react-icons/lu';
+import { LuArrowLeft, LuListPlus } from 'react-icons/lu';
 
-const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
+const WorkersForm = ({
+  data,
+  fields,
+  addField,
+  onChange,
+  onDelete,
+  changeStep,
+}) => {
   return (
     <form>
       <div className="fields-container">
@@ -22,9 +29,18 @@ const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
         })}
       </div>
 
-      <div className="d-grid gap-2">
+      <div className="d-flex gap-2">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => changeStep(1)}
+        >
+          <LuArrowLeft />
+          Back
+        </button>
         <button type="button" className="btn btn-primary" onClick={addField}>
-          <LuPlus />
+          <LuListPlus />
+          Add process
         </button>
       </div>
     </form>

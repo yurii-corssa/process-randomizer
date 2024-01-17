@@ -35,11 +35,25 @@ $theme-colors: (
 .checks-container {
   display: flex;
   flex-direction: column;
-  padding: 5px 40px;
-  gap: 1rem;
+  padding: 5px;
   height: 40vh;
   margin-bottom: 20px;
   overflow-y: scroll;
+}
+
+.check-item {
+  // display: flex;
+  // align-items: center;
+  gap: 0.5rem;
+  padding-left: 2rem;
+
+  &:hover {
+    background-color: $input-bg;
+  }
+}
+
+.form-check-label {
+  width: 100%;
 }
 
 .dropdown {
