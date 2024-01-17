@@ -1,25 +1,14 @@
 import { LuArrowRight } from 'react-icons/lu';
 
-const ValueSelection = ({
-  data,
-  checkedValues,
-  setCheckedValues,
-  changeStep,
-}) => {
-  const handleCheckboxChange = value => {
-    setCheckedValues(prev => {
-      if (prev.includes(value)) {
-        return prev.filter(item => item !== value);
-      } else {
-        return [...prev, value];
-      }
-    });
-  };
-
+const ValueSelection = ({ data, fields, onCheckboxChange, changeStep }) => {
   const handleSubmit = e => {
     e.preventDefault();
     changeStep(2);
   };
+
+  const isChecked = value => fields?.some(field => field.value === value);
+
+  console.log(fields);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -33,8 +22,8 @@ const ValueSelection = ({
                 name={value}
                 value={value}
                 id={value}
-                checked={checkedValues.includes(value)}
-                onChange={() => handleCheckboxChange(value)}
+                checked={isChecked(value)}
+                onChange={() => onCheckboxChange(value)}
               />
               <label className="form-check-label" htmlFor={value}>
                 {value}

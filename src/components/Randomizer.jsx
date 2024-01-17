@@ -6,7 +6,6 @@ import { createField } from 'utils/createField';
 import ResultsTable from './ResultsTable';
 import FormCard from './FormCard';
 import ValueSelection from './ValueSelection';
-import { nanoid } from 'nanoid';
 
 const initialWorkerField = {
   id: '',
@@ -21,14 +20,16 @@ const initialProcessField = {
 const Randomizer = () => {
   const [dataProcesses, setDataProcesses] = useState({});
   const [dataWorkers, setDataWorkers] = useState({});
+
   const [processFields, setProcessFields] = useState([]);
   const [workerFields, setWorkerFields] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [randomValues, setRandomValues] = useState([]);
+
   const [processFormStep, setProcessFormStep] = useState(1);
   const [workersFormStep, setWorkersFormStep] = useState(1);
-  const [checkedProcessValues, setCheckedProcessValues] = useState([]);
-  const [checkedWorkersValues, setCheckedWorkersValues] = useState([]);
+
+  const [randomValues, setRandomValues] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const data = db;
@@ -37,14 +38,22 @@ const Randomizer = () => {
     setIsLoading(false);
   }, []);
 
+  const addProcessField = (data = initialProcessField) => {
+    const newField = createField(data);
+    setProcessFields(prev => [...prev, newField]);
+  };
+
   const addWorkerField = (data = initialWorkerField) => {
     const newField = createField(data);
     setWorkerFields(prev => [...prev, newField]);
   };
 
-  const addProcessField = (data = initialProcessField) => {
-    const newField = createField(data);
-    setProcessFields(prev => [...prev, newField]);
+  const handleChangeProcess = (id, value) => {
+    setProcessFields(
+      processFields.map(process =>
+        process.id === id ? { ...process, value } : process
+      )
+    );
   };
 
   const handleChangeWorker = (id, value) => {
@@ -55,12 +64,28 @@ const Randomizer = () => {
     );
   };
 
-  const handleChangeProcess = (id, value) => {
-    setProcessFields(
-      processFields.map(process =>
-        process.id === id ? { ...process, value } : process
-      )
-    );
+  const handleCheckboxChangeProcess = value => {
+    const isChecked = processFields.some(field => field.value === value);
+
+    if (isChecked) {
+      return setProcessFields(prev =>
+        prev.filter(field => field.value !== value)
+      );
+    } else {
+      return addProcessField({ value });
+    }
+  };
+
+  const handleCheckboxChangeWorkers = value => {
+    const isChecked = workerFields.some(field => field.value === value);
+
+    if (isChecked) {
+      return setWorkerFields(prev =>
+        prev.filter(field => field.value !== value)
+      );
+    } else {
+      return addWorkerField({ value });
+    }
   };
 
   const handleDeleteWorker = id => {
@@ -73,19 +98,11 @@ const Randomizer = () => {
 
   const handleChangeStepProcess = step => {
     if (step === 1) {
-      setProcessFields([]);
       setProcessFormStep(1);
     }
 
     if (step === 2) {
       if (step === 2) {
-        if (!checkedProcessValues.length && !processFields.length) {
-          addProcessField();
-        } else {
-          checkedProcessValues.map(value =>
-            addProcessField({ id: nanoid(), value })
-          );
-        }
         setProcessFormStep(2);
       }
     }
@@ -93,18 +110,10 @@ const Randomizer = () => {
 
   const handleChangeStepWorkers = step => {
     if (step === 1) {
-      setWorkerFields([]);
       setWorkersFormStep(1);
     }
 
     if (step === 2) {
-      if (!checkedWorkersValues.length && !workerFields.length) {
-        addWorkerField();
-      } else {
-        checkedWorkersValues.map(value =>
-          addWorkerField({ id: nanoid(), value })
-        );
-      }
       setWorkersFormStep(2);
     }
   };
@@ -160,8 +169,8 @@ const Randomizer = () => {
             {processFormStep === 1 && (
               <ValueSelection
                 data={dataProcesses}
-                checkedValues={checkedProcessValues}
-                setCheckedValues={setCheckedProcessValues}
+                fields={processFields}
+                onCheckboxChange={handleCheckboxChangeProcess}
                 changeStep={handleChangeStepProcess}
               />
             )}
@@ -180,8 +189,8 @@ const Randomizer = () => {
             {workersFormStep === 1 && (
               <ValueSelection
                 data={dataWorkers}
-                checkedValues={checkedWorkersValues}
-                setCheckedValues={setCheckedWorkersValues}
+                fields={workerFields}
+                onCheckboxChange={handleCheckboxChangeWorkers}
                 changeStep={handleChangeStepWorkers}
               />
             )}
@@ -202,7 +211,6 @@ const Randomizer = () => {
             type="button"
             className="btn btn-primary w-25"
             onClick={runRundomize}
-            disabled={processFormStep !== 2 || workersFormStep !== 2}
           >
             Go
           </button>
