@@ -1,5 +1,5 @@
 import db from './db.json';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ProcessesForm from './ProcessesForm';
 import WorkersForm from './WorkersForm';
 import { createField } from 'utils/createField';
@@ -31,12 +31,64 @@ const Randomizer = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [iterationSpeed, setIterationSpeed] = useState(null);
+
+  const runRundomize = useCallback(() => {
+    const selectedWorkers = workerFields
+      .filter(worker => worker.value)
+      .map(worker => worker.value);
+
+    const selectedProcess = processFields
+      .filter(process => process.value)
+      .map(process => process.value);
+
+    if (selectedProcess.length > selectedWorkers.length) {
+      alert('not enough employees have been selected');
+      return;
+    }
+
+    const iteratedProcesses = selectedProcess.map(process => {
+      const workersCount = selectedWorkers.length;
+      const randomNumber = Math.floor(Math.random() * workersCount);
+
+      const processItem = { process, worker: selectedWorkers[randomNumber] };
+
+      selectedWorkers.splice(randomNumber, 1);
+
+      return processItem;
+    });
+
+    setRandomValues(iteratedProcesses);
+
+    if (iterationSpeed < 700) {
+      setIterationSpeed(prev => prev * 1.1);
+    } else if (iterationSpeed < 1000) {
+      setIterationSpeed(prev => prev * 1.2);
+    } else if (iterationSpeed < 1400) {
+      setIterationSpeed(prev => prev * 1.3);
+    } else {
+      setIterationSpeed(null);
+    }
+  }, [iterationSpeed, processFields, workerFields]);
+
   useEffect(() => {
     const data = db;
     setDataProcesses(data.processes);
     setDataWorkers(data.workers);
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    let timeoutId = null;
+
+    if (iterationSpeed) {
+      timeoutId = setTimeout(runRundomize, iterationSpeed);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [iterationSpeed, runRundomize]);
 
   const addProcessField = (data = initialProcessField) => {
     const newField = createField(data);
@@ -118,47 +170,6 @@ const Randomizer = () => {
     }
   };
 
-  const runRundomize = async () => {
-    const selectedWorkers = workerFields
-      .filter(worker => worker.value)
-      .map(worker => worker.value);
-
-    const selectedProcess = processFields
-      .filter(process => process.value)
-      .map(process => process.value);
-
-    if (selectedProcess.length > selectedWorkers.length) {
-      alert('not enough employees have been selected');
-      return;
-    }
-
-    const iteratedProcesses = selectedProcess.map(process => {
-      const workersCount = selectedWorkers.length;
-      const randomNumber = Math.floor(Math.random() * workersCount);
-
-      const processItem = { process, worker: selectedWorkers[randomNumber] };
-
-      selectedWorkers.splice(randomNumber, 1);
-
-      return processItem;
-    });
-
-    const iteratedRemainingWorker = selectedWorkers.map(worker => ({
-      process: 'Sortownia',
-      worker,
-    }));
-
-    // const ahaha = [{ process: 'Zamiatanie', worker: 'Korbut Artem' }];
-
-    const finalResult = [
-      ...iteratedProcesses,
-      ...iteratedRemainingWorker,
-      // ...ahaha,
-    ];
-
-    setRandomValues(finalResult);
-  };
-
   return isLoading ? (
     <div>Loading...</div>
   ) : (
@@ -210,7 +221,7 @@ const Randomizer = () => {
           <button
             type="button"
             className="btn btn-primary w-25"
-            onClick={runRundomize}
+            onClick={() => setIterationSpeed(10)}
           >
             Go
           </button>

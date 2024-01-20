@@ -8,8 +8,6 @@ const ValueSelection = ({ data, fields, onCheckboxChange, changeStep }) => {
 
   const isChecked = value => fields?.some(field => field.value === value);
 
-  console.log(fields);
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-check checks-container">
