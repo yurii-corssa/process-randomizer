@@ -2,11 +2,11 @@ import TableItem from './TableItem';
 
 const ResultsTable = ({ data }) => {
   return (
-    <table className="table table-striped table-hover table-bordered w-50">
+    <table className="table table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col">Process</th>
-          <th scope="col">Worker</th>
+          <th>Process</th>
+          <th>Worker</th>
         </tr>
       </thead>
       <tbody>

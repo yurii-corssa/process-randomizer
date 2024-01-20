@@ -4,7 +4,7 @@ import ProcessesForm from './ProcessesForm';
 import WorkersForm from './WorkersForm';
 import { createField } from 'utils/createField';
 import ResultsTable from './ResultsTable';
-import FormCard from './FormCard';
+import BackgroundCard from './BackgroundCard';
 import ValueSelection from './ValueSelection';
 
 const initialWorkerField = {
@@ -31,7 +31,9 @@ const Randomizer = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [iterationSpeed, setIterationSpeed] = useState(null);
+  const [iterationSpeed, setIterationSpeed] = useState(0);
+
+  const [isRandomizing, setIsRandomizing] = useState(false);
 
   const runRundomize = useCallback(() => {
     const selectedWorkers = workerFields
@@ -67,6 +69,7 @@ const Randomizer = () => {
     } else if (iterationSpeed < 1400) {
       setIterationSpeed(prev => prev * 1.3);
     } else {
+      setIsRandomizing(false);
       setIterationSpeed(null);
     }
   }, [iterationSpeed, processFields, workerFields]);
@@ -170,19 +173,27 @@ const Randomizer = () => {
     }
   };
 
+  const handleClick = () => {
+    if (processFields.length && workerFields.length) {
+      setIsRandomizing(true);
+      setIterationSpeed(10);
+    }
+  };
+
   return isLoading ? (
     <div>Loading...</div>
   ) : (
     <>
       <section className="container p-3 d-flex flex-column gap-4">
         <div className="d-flex gap-5 justify-content-center">
-          <FormCard>
+          <BackgroundCard>
             {processFormStep === 1 && (
               <ValueSelection
                 data={dataProcesses}
                 fields={processFields}
                 onCheckboxChange={handleCheckboxChangeProcess}
                 changeStep={handleChangeStepProcess}
+                disabled={isRandomizing}
               />
             )}
             {processFormStep === 2 && (
@@ -195,14 +206,15 @@ const Randomizer = () => {
                 changeStep={handleChangeStepProcess}
               />
             )}
-          </FormCard>
-          <FormCard>
+          </BackgroundCard>
+          <BackgroundCard>
             {workersFormStep === 1 && (
               <ValueSelection
                 data={dataWorkers}
                 fields={workerFields}
                 onCheckboxChange={handleCheckboxChangeWorkers}
                 changeStep={handleChangeStepWorkers}
+                disabled={isRandomizing}
               />
             )}
             {workersFormStep === 2 && (
@@ -215,20 +227,23 @@ const Randomizer = () => {
                 changeStep={handleChangeStepWorkers}
               />
             )}
-          </FormCard>
+          </BackgroundCard>
         </div>
         <div className="d-flex justify-content-center">
           <button
             type="button"
             className="btn btn-primary w-25"
-            onClick={() => setIterationSpeed(10)}
+            onClick={handleClick}
+            disabled={isRandomizing}
           >
             Go
           </button>
         </div>
       </section>
       <section className="container d-flex flex-column gap-5 align-items-center">
-        {randomValues.length !== 0 && <ResultsTable data={randomValues} />}
+        <BackgroundCard>
+          <ResultsTable data={randomValues} />
+        </BackgroundCard>
       </section>
     </>
   );
