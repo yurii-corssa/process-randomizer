@@ -6,6 +6,7 @@ import { createField } from 'utils/createField';
 import ResultsTable from './ResultsTable';
 import BackgroundCard from './BackgroundCard';
 import ValueSelection from './ValueSelection';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const initialWorkerField = {
   id: '',
@@ -34,6 +35,8 @@ const Randomizer = () => {
   const [iterationSpeed, setIterationSpeed] = useState(0);
 
   const [isRandomizing, setIsRandomizing] = useState(false);
+
+  const [explosion, setExplosion] = useState(false);
 
   const runRundomize = useCallback(() => {
     const selectedWorkers = workerFields
@@ -70,7 +73,9 @@ const Randomizer = () => {
       setIterationSpeed(prev => prev * 1.3);
     } else {
       setIsRandomizing(false);
-      setIterationSpeed(null);
+      setIterationSpeed(0);
+      setExplosion(true);
+      setTimeout(() => setExplosion(false), 4000);
     }
   }, [iterationSpeed, processFields, workerFields]);
 
@@ -207,7 +212,15 @@ const Randomizer = () => {
               />
             )}
           </BackgroundCard>
+
           <BackgroundCard>
+            {explosion && (
+              <ConfettiExplosion
+                force={0.8}
+                duration={3000}
+                particleCount={250}
+              />
+            )}
             {workersFormStep === 1 && (
               <ValueSelection
                 data={dataWorkers}
@@ -238,10 +251,24 @@ const Randomizer = () => {
           >
             Go
           </button>
+          {explosion && (
+            <ConfettiExplosion
+              force={0.8}
+              duration={3000}
+              particleCount={250}
+            />
+          )}
         </div>
       </section>
       <section className="container d-flex flex-column gap-5 align-items-center">
         <BackgroundCard>
+          {explosion && (
+            <ConfettiExplosion
+              force={0.8}
+              duration={3000}
+              particleCount={250}
+            />
+          )}
           <ResultsTable data={randomValues} />
         </BackgroundCard>
       </section>
