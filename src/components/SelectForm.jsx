@@ -1,8 +1,10 @@
-const ValueSelection = ({ data, fields, onCheckboxChange, disabled }) => {
+import { toggleCheckbox } from 'utils/toggleCheckbox';
+
+const SelectForm = ({ data, fields, setFields, disabled }) => {
   const isChecked = value => fields?.some(field => field.value === value);
 
   return (
-    <form style={{height: '40vh'}} >
+    <form style={{ height: '40vh' }}>
       <div className="form-check checks-container">
         {data.map(({ value }) => {
           return (
@@ -14,7 +16,7 @@ const ValueSelection = ({ data, fields, onCheckboxChange, disabled }) => {
                 value={value}
                 id={value}
                 checked={isChecked(value)}
-                onChange={() => onCheckboxChange(value)}
+                onChange={() => toggleCheckbox(fields, setFields, value)}
                 disabled={disabled}
               />
               <label className="form-check-label" htmlFor={value}>
@@ -28,4 +30,4 @@ const ValueSelection = ({ data, fields, onCheckboxChange, disabled }) => {
   );
 };
 
-export default ValueSelection;
+export default SelectForm;

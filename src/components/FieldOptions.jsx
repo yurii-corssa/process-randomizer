@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-const FieldOptions = ({ options, fields, onSelect }) => {
+const FieldOptions = ({ options, fields, isUniqueData, onSelect }) => {
   return options.map(option => {
     const isSelected = fields.some(({ value }) => value === option.value);
 
@@ -10,7 +10,7 @@ const FieldOptions = ({ options, fields, onSelect }) => {
           className="dropdown-item"
           type="button"
           onClick={() => onSelect(option.value)}
-          disabled={isSelected}
+          disabled={isSelected && isUniqueData}
         >
           {option.value}
         </button>

@@ -1,23 +1,11 @@
 import db from './db.json';
 import { useCallback, useEffect, useState } from 'react';
-import ProcessesForm from './ProcessesForm';
-import WorkersForm from './WorkersForm';
-import { createField } from 'utils/createField';
+import ManuallyForm from './ManuallyForm';
 import ResultsTable from './ResultsTable';
 import BackgroundCard from './BackgroundCard';
-import ValueSelection from './ValueSelection';
+import SelectForm from './SelectForm';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { Tab, Tabs } from 'react-bootstrap';
-
-const initialWorkerField = {
-  id: '',
-  value: '',
-};
-
-const initialProcessField = {
-  id: '',
-  value: '',
-};
 
 const Randomizer = () => {
   const [dataProcesses, setDataProcesses] = useState({});
@@ -25,9 +13,6 @@ const Randomizer = () => {
 
   const [processFields, setProcessFields] = useState([]);
   const [workerFields, setWorkerFields] = useState([]);
-
-  const [processFormStep, setProcessFormStep] = useState(1);
-  const [workersFormStep, setWorkersFormStep] = useState(1);
 
   const [randomValues, setRandomValues] = useState([]);
 
@@ -99,81 +84,6 @@ const Randomizer = () => {
     };
   }, [iterationSpeed, runRundomize]);
 
-  const addProcessField = (data = initialProcessField) => {
-    const newField = createField(data);
-
-    setProcessFields(prev => {
-      const emptyField = prev.find(el => !el.value);
-
-      if (emptyField && newField.value) {
-        return prev.map(field => {
-          return field.id === emptyField.id ? newField : field;
-        });
-      }
-
-      return [...prev, newField];
-    });
-  };
-
-  const addWorkerField = (data = initialWorkerField) => {
-    const newField = createField(data);
-    setWorkerFields(prev => [...prev, newField]);
-  };
-
-  const handleChangeProcess = (id, value) => {
-    setProcessFields(
-      processFields.map(process =>
-        process.id === id ? { ...process, value } : process
-      )
-    );
-  };
-
-  const handleChangeWorker = (id, value) => {
-    setWorkerFields(
-      workerFields.map(worker =>
-        worker.id === id ? { ...worker, value } : worker
-      )
-    );
-  };
-
-  const handleCheckboxChangeProcess = value => {
-    const isChecked = processFields.some(field => field.value === value);
-
-    if (isChecked) {
-      return setProcessFields(prev => {
-        const newArr = prev.filter(field => field.value !== value);
-        if (!newArr.length) {
-          const emptyField = createField();
-
-          return [emptyField];
-        }
-        return newArr;
-      });
-    } else {
-      return addProcessField({ value });
-    }
-  };
-
-  const handleCheckboxChangeWorkers = value => {
-    const isChecked = workerFields.some(field => field.value === value);
-
-    if (isChecked) {
-      return setWorkerFields(prev =>
-        prev.filter(field => field.value !== value)
-      );
-    } else {
-      return addWorkerField({ value });
-    }
-  };
-
-  const handleDeleteWorker = id => {
-    setWorkerFields(workerFields.filter(worker => worker.id !== id));
-  };
-
-  const handleDeleteProcess = id => {
-    setProcessFields(processFields.filter(process => process.id !== id));
-  };
-
   const handleClick = () => {
     if (processFields.length && workerFields.length) {
       setIsRandomizing(true);
@@ -195,20 +105,20 @@ const Randomizer = () => {
               fill
             >
               <Tab eventKey="select" title="Select">
-                <ValueSelection
+                <SelectForm
                   data={dataProcesses}
                   fields={processFields}
-                  onCheckboxChange={handleCheckboxChangeProcess}
+                  setFields={setProcessFields}
                   disabled={isRandomizing}
                 />
               </Tab>
               <Tab eventKey="manually" title="Manually">
-                <ProcessesForm
+                <ManuallyForm
                   data={dataProcesses}
                   fields={processFields}
-                  addField={addProcessField}
-                  onChange={handleChangeProcess}
-                  onDelete={handleDeleteProcess}
+                  setFields={setProcessFields}
+                  isUniqueData={false}
+                  disabled={isRandomizing}
                 />
               </Tab>
             </Tabs>
@@ -222,20 +132,20 @@ const Randomizer = () => {
               fill
             >
               <Tab eventKey="select" title="Select">
-                <ValueSelection
+                <SelectForm
                   data={dataWorkers}
                   fields={workerFields}
-                  onCheckboxChange={handleCheckboxChangeWorkers}
+                  setFields={setWorkerFields}
                   disabled={isRandomizing}
                 />
               </Tab>
               <Tab eventKey="manually" title="Manually">
-                <WorkersForm
+                <ManuallyForm
                   data={dataWorkers}
                   fields={workerFields}
-                  addField={addWorkerField}
-                  onChange={handleChangeWorker}
-                  onDelete={handleDeleteWorker}
+                  setFields={setWorkerFields}
+                  isUniqueData={true}
+                  disabled={isRandomizing}
                 />
               </Tab>
             </Tabs>

@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import Field from './Field.jsx';
+import Field from './Field';
 import { LuListPlus } from 'react-icons/lu';
+import { addField } from 'utils/addField';
 
-const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
+const ManuallyForm = ({ data, fields, setFields, isUniqueData, disabled }) => {
   useEffect(() => {
     if (!fields.length) {
-      addField();
+      addField(setFields);
     }
   }, []);
 
@@ -23,13 +24,15 @@ const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
           return (
             <Field
               key={id}
-              label="Worker"
+              label="Process"
               id={id}
               value={value}
               data={data}
               isLastField={fields.length <= 1}
-              onChange={onChange}
-              onDelete={onDelete}
+              isUniqueData={isUniqueData}
+              fields={fields}
+              setFields={setFields}
+              disabled={disabled}
             />
           );
         })}
@@ -38,13 +41,14 @@ const WorkersForm = ({ data, fields, addField, onChange, onDelete }) => {
       <button
         type="button"
         className="btn btn-primary"
-        onClick={() => addField()}
+        disabled={disabled}
+        onClick={() => addField(setFields)}
       >
         <LuListPlus />
-        Add process
+        Add Field
       </button>
     </form>
   );
 };
 
-export default WorkersForm;
+export default ManuallyForm;

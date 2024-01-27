@@ -1,22 +1,25 @@
+import { selectValue } from 'utils/selectValue';
 import FieldOptions from './FieldOptions';
 import { LuTrash, LuChevronDown } from 'react-icons/lu';
+import { deleteField } from 'utils/deleteField';
 
 const Field = ({
   label,
   id,
   value,
-  fields,
   data,
+  fields,
+  setFields,
   isLastField,
-  onChange,
-  onDelete,
+  isUniqueData,
+  disabled,
 }) => {
-  const handleChange = e => {
-    onChange(id, e.target.value);
+  const handleWriteChange = e => {
+    selectValue(fields, setFields, id, e.target.value);
   };
 
   const handleSelectValue = value => {
-    onChange(id, value);
+    selectValue(fields, setFields, id, value);
   };
 
   return (
@@ -28,7 +31,8 @@ const Field = ({
         aria-label={label}
         aria-describedby="button-addon2"
         value={value}
-        onChange={handleChange}
+        disabled={disabled}
+        onChange={handleWriteChange}
       />
       <button
         className="btn btn-outline-secondary d-flex align-items-center"
@@ -36,6 +40,7 @@ const Field = ({
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
+        disabled={disabled}
       >
         <LuChevronDown />
       </button>
@@ -44,14 +49,15 @@ const Field = ({
         <FieldOptions
           options={data}
           fields={fields ? fields : []}
+          isUniqueData={isUniqueData}
           onSelect={handleSelectValue}
         />
       </ul>
       <button
         className="btn btn-outline-secondary d-flex align-items-center"
         type="button"
-        onClick={() => onDelete(id, value)}
-        disabled={isLastField}
+        onClick={() => deleteField(fields, setFields, id, value)}
+        disabled={isLastField || disabled}
       >
         <LuTrash />
       </button>
