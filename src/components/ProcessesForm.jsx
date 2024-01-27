@@ -1,16 +1,23 @@
+import { useEffect } from 'react';
 import Field from './Field';
-import { LuListPlus, LuArrowLeft } from 'react-icons/lu';
+import { LuListPlus } from 'react-icons/lu';
 
-const ProcessesForm = ({
-  data,
-  fields,
-  addField,
-  onChange,
-  onDelete,
-  changeStep,
-}) => {
+const ProcessesForm = ({ data, fields, addField, onChange, onDelete }) => {
+  useEffect(() => {
+    if (!fields.length) {
+      addField();
+    }
+  }, []);
+
   return (
-    <form>
+    <form
+      style={{
+        height: '40vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
+    >
       <div className="fields-container">
         {fields.map(({ id, value }) => {
           return (
@@ -28,20 +35,14 @@ const ProcessesForm = ({
         })}
       </div>
 
-      <div className="d-flex gap-2">
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => changeStep(1)}
-        >
-          <LuArrowLeft />
-          Back
-        </button>
-        <button type="button" className="btn btn-primary" onClick={addField}>
-          <LuListPlus />
-          Add process
-        </button>
-      </div>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={() => addField()}
+      >
+        <LuListPlus />
+        Add process
+      </button>
     </form>
   );
 };

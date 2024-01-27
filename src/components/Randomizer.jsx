@@ -7,6 +7,7 @@ import ResultsTable from './ResultsTable';
 import BackgroundCard from './BackgroundCard';
 import ValueSelection from './ValueSelection';
 import ConfettiExplosion from 'react-confetti-explosion';
+import { Tab, Tabs } from 'react-bootstrap';
 
 const initialWorkerField = {
   id: '',
@@ -100,7 +101,18 @@ const Randomizer = () => {
 
   const addProcessField = (data = initialProcessField) => {
     const newField = createField(data);
-    setProcessFields(prev => [...prev, newField]);
+
+    setProcessFields(prev => {
+      const emptyField = prev.find(el => !el.value);
+
+      if (emptyField && newField.value) {
+        return prev.map(field => {
+          return field.id === emptyField.id ? newField : field;
+        });
+      }
+
+      return [...prev, newField];
+    });
   };
 
   const addWorkerField = (data = initialWorkerField) => {
@@ -128,9 +140,15 @@ const Randomizer = () => {
     const isChecked = processFields.some(field => field.value === value);
 
     if (isChecked) {
-      return setProcessFields(prev =>
-        prev.filter(field => field.value !== value)
-      );
+      return setProcessFields(prev => {
+        const newArr = prev.filter(field => field.value !== value);
+        if (!newArr.length) {
+          const emptyField = createField();
+
+          return [emptyField];
+        }
+        return newArr;
+      });
     } else {
       return addProcessField({ value });
     }
@@ -156,28 +174,6 @@ const Randomizer = () => {
     setProcessFields(processFields.filter(process => process.id !== id));
   };
 
-  const handleChangeStepProcess = step => {
-    if (step === 1) {
-      setProcessFormStep(1);
-    }
-
-    if (step === 2) {
-      if (step === 2) {
-        setProcessFormStep(2);
-      }
-    }
-  };
-
-  const handleChangeStepWorkers = step => {
-    if (step === 1) {
-      setWorkersFormStep(1);
-    }
-
-    if (step === 2) {
-      setWorkersFormStep(2);
-    }
-  };
-
   const handleClick = () => {
     if (processFields.length && workerFields.length) {
       setIsRandomizing(true);
@@ -192,54 +188,57 @@ const Randomizer = () => {
       <section className="container p-3 d-flex flex-column gap-4">
         <div className="d-flex gap-5 justify-content-center">
           <BackgroundCard>
-            {processFormStep === 1 && (
-              <ValueSelection
-                data={dataProcesses}
-                fields={processFields}
-                onCheckboxChange={handleCheckboxChangeProcess}
-                changeStep={handleChangeStepProcess}
-                disabled={isRandomizing}
-              />
-            )}
-            {processFormStep === 2 && (
-              <ProcessesForm
-                data={dataProcesses}
-                fields={processFields}
-                addField={addProcessField}
-                onChange={handleChangeProcess}
-                onDelete={handleDeleteProcess}
-                changeStep={handleChangeStepProcess}
-              />
-            )}
+            <Tabs
+              defaultActiveKey="select"
+              id="fill-tab-example"
+              className="mb-3"
+              fill
+            >
+              <Tab eventKey="select" title="Select">
+                <ValueSelection
+                  data={dataProcesses}
+                  fields={processFields}
+                  onCheckboxChange={handleCheckboxChangeProcess}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+              <Tab eventKey="manually" title="Manually">
+                <ProcessesForm
+                  data={dataProcesses}
+                  fields={processFields}
+                  addField={addProcessField}
+                  onChange={handleChangeProcess}
+                  onDelete={handleDeleteProcess}
+                />
+              </Tab>
+            </Tabs>
           </BackgroundCard>
 
           <BackgroundCard>
-            {explosion && (
-              <ConfettiExplosion
-                force={0.8}
-                duration={3000}
-                particleCount={250}
-              />
-            )}
-            {workersFormStep === 1 && (
-              <ValueSelection
-                data={dataWorkers}
-                fields={workerFields}
-                onCheckboxChange={handleCheckboxChangeWorkers}
-                changeStep={handleChangeStepWorkers}
-                disabled={isRandomizing}
-              />
-            )}
-            {workersFormStep === 2 && (
-              <WorkersForm
-                data={dataWorkers}
-                fields={workerFields}
-                addField={addWorkerField}
-                onChange={handleChangeWorker}
-                onDelete={handleDeleteWorker}
-                changeStep={handleChangeStepWorkers}
-              />
-            )}
+            <Tabs
+              defaultActiveKey="select"
+              id="fill-tab-example"
+              className="mb-3"
+              fill
+            >
+              <Tab eventKey="select" title="Select">
+                <ValueSelection
+                  data={dataWorkers}
+                  fields={workerFields}
+                  onCheckboxChange={handleCheckboxChangeWorkers}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+              <Tab eventKey="manually" title="Manually">
+                <WorkersForm
+                  data={dataWorkers}
+                  fields={workerFields}
+                  addField={addWorkerField}
+                  onChange={handleChangeWorker}
+                  onDelete={handleDeleteWorker}
+                />
+              </Tab>
+            </Tabs>
           </BackgroundCard>
         </div>
         <div className="d-flex justify-content-center">

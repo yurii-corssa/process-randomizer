@@ -1,21 +1,8 @@
-import { LuArrowRight } from 'react-icons/lu';
-
-const ValueSelection = ({
-  data,
-  fields,
-  onCheckboxChange,
-  changeStep,
-  disabled,
-}) => {
-  const handleSubmit = e => {
-    e.preventDefault();
-    changeStep(2);
-  };
-
+const ValueSelection = ({ data, fields, onCheckboxChange, disabled }) => {
   const isChecked = value => fields?.some(field => field.value === value);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form style={{height: '40vh'}} >
       <div className="form-check checks-container">
         {data.map(({ value }) => {
           return (
@@ -36,13 +23,6 @@ const ValueSelection = ({
             </div>
           );
         })}
-      </div>
-
-      <div className="d-grid gap-2">
-        <button type="submit" className="btn btn-primary" disabled={disabled}>
-          Next
-          <LuArrowRight />
-        </button>
       </div>
     </form>
   );

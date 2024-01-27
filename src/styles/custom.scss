@@ -27,7 +27,8 @@ $theme-colors: (
 
 .fields-container {
   width: 320px;
-  height: 40vh;
+  // height: 40vh;
+  // height: 100%;
   padding: 5px;
   margin-bottom: 20px;
   overflow-y: scroll;
@@ -37,7 +38,8 @@ $theme-colors: (
   display: flex;
   flex-direction: column;
   width: 320px;
-  height: 40vh;
+  // height: 40vh;
+  height: 100%;
   padding: 5px;
   margin-bottom: 20px;
   overflow-y: scroll;
