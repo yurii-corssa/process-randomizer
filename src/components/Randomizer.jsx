@@ -5,7 +5,7 @@ import ResultsTable from './ResultsTable';
 import BackgroundCard from './BackgroundCard';
 import SelectForm from './SelectForm';
 import ConfettiExplosion from 'react-confetti-explosion';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 
 const Randomizer = () => {
   const [dataProcesses, setDataProcesses] = useState({});
@@ -95,9 +95,9 @@ const Randomizer = () => {
     <div>Loading...</div>
   ) : (
     <>
-      <section className="container p-3 d-flex flex-column gap-4">
-        <div className="d-flex gap-5 justify-content-center">
-          <BackgroundCard>
+      <Stack as="section" gap={4} className="p-3">
+        <Stack bsPrefix="hstack" gap={5} className="justify-content-center">
+          <BackgroundCard title="Processes" >
             <Tabs
               defaultActiveKey="select"
               id="fill-tab-example"
@@ -124,7 +124,7 @@ const Randomizer = () => {
             </Tabs>
           </BackgroundCard>
 
-          <BackgroundCard>
+          <BackgroundCard title="Employees" >
             <Tabs
               defaultActiveKey="select"
               id="fill-tab-example"
@@ -150,16 +150,18 @@ const Randomizer = () => {
               </Tab>
             </Tabs>
           </BackgroundCard>
-        </div>
-        <div className="d-flex justify-content-center">
-          <button
+        </Stack>
+
+        <Stack bsPrefix="hstack" className="justify-content-center">
+          <Button
             type="button"
-            className="btn btn-primary w-25"
+            variant="primary"
+            className="w-25"
             onClick={handleClick}
             disabled={isRandomizing}
           >
             Go
-          </button>
+          </Button>
           {explosion && (
             <ConfettiExplosion
               force={0.8}
@@ -167,10 +169,11 @@ const Randomizer = () => {
               particleCount={250}
             />
           )}
-        </div>
-      </section>
-      <section className="container d-flex flex-column gap-5 align-items-center">
-        <BackgroundCard>
+        </Stack>
+      </Stack>
+
+      <Stack gap={5} className="align-items-center">
+        <BackgroundCard title="Results Table" >
           {explosion && (
             <ConfettiExplosion
               force={0.8}
@@ -180,7 +183,7 @@ const Randomizer = () => {
           )}
           <ResultsTable data={randomValues} />
         </BackgroundCard>
-      </section>
+      </Stack>
     </>
   );
 };
