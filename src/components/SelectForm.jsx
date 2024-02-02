@@ -1,16 +1,17 @@
+import { Form } from 'react-bootstrap';
 import { toggleCheckbox } from 'utils/toggleCheckbox';
 
 const SelectForm = ({ data, fields, setFields, disabled }) => {
   const isChecked = value => fields?.some(field => field.value === value);
 
   return (
-    <form style={{ height: '40vh' }}>
-      <div className="form-check checks-container">
+    <Form className="fields-form">
+      <div className="checks-container">
         {data.map(({ value }) => {
           return (
-            <div key={value} className="check-item">
-              <input
-                className="form-check-input"
+            <Form.Group key={value} className="check-item">
+              <Form.Check
+                className="check-btn"
                 type="checkbox"
                 name={value}
                 value={value}
@@ -19,14 +20,12 @@ const SelectForm = ({ data, fields, setFields, disabled }) => {
                 onChange={() => toggleCheckbox(fields, setFields, value)}
                 disabled={disabled}
               />
-              <label className="form-check-label" htmlFor={value}>
-                {value}
-              </label>
-            </div>
+              <Form.Label htmlFor={value}>{value}</Form.Label>
+            </Form.Group>
           );
         })}
       </div>
-    </form>
+    </Form>
   );
 };
 

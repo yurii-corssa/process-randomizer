@@ -94,10 +94,10 @@ const Randomizer = () => {
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <>
-      <Stack as="section" gap={4} className="p-3">
-        <Stack bsPrefix="hstack" gap={5} className="justify-content-center">
-          <BackgroundCard title="Processes" >
+    <Stack as="main">
+      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
+        <Stack bsPrefix="hstack" gap={5} className="justify-content-between">
+          <BackgroundCard title="Processes">
             <Tabs
               defaultActiveKey="select"
               id="fill-tab-example"
@@ -114,6 +114,7 @@ const Randomizer = () => {
               </Tab>
               <Tab eventKey="manually" title="Manually">
                 <ManuallyForm
+                  label="Process"
                   data={dataProcesses}
                   fields={processFields}
                   setFields={setProcessFields}
@@ -124,7 +125,7 @@ const Randomizer = () => {
             </Tabs>
           </BackgroundCard>
 
-          <BackgroundCard title="Employees" >
+          <BackgroundCard title="Employees">
             <Tabs
               defaultActiveKey="select"
               id="fill-tab-example"
@@ -141,6 +142,7 @@ const Randomizer = () => {
               </Tab>
               <Tab eventKey="manually" title="Manually">
                 <ManuallyForm
+                  label="Employee"
                   data={dataWorkers}
                   fields={workerFields}
                   setFields={setWorkerFields}
@@ -152,15 +154,20 @@ const Randomizer = () => {
           </BackgroundCard>
         </Stack>
 
-        <Stack bsPrefix="hstack" className="justify-content-center">
+        <Stack bsPrefix="hstack" className="justify-content-center" gap={4}>
           <Button
-            type="button"
-            variant="primary"
             className="w-25"
             onClick={handleClick}
             disabled={isRandomizing}
           >
             Go
+          </Button>
+          <Button
+            className="w-25"
+            onClick={() => window.location.reload()}
+            disabled={isRandomizing}
+          >
+            Reset
           </Button>
           {explosion && (
             <ConfettiExplosion
@@ -172,8 +179,8 @@ const Randomizer = () => {
         </Stack>
       </Stack>
 
-      <Stack gap={5} className="align-items-center">
-        <BackgroundCard title="Results Table" >
+      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
+        <BackgroundCard title="Results Table">
           {explosion && (
             <ConfettiExplosion
               force={0.8}
@@ -184,7 +191,7 @@ const Randomizer = () => {
           <ResultsTable data={randomValues} />
         </BackgroundCard>
       </Stack>
-    </>
+    </Stack>
   );
 };
 

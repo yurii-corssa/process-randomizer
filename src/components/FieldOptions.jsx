@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { Button, DropdownItem } from 'react-bootstrap';
+import { DropdownItem } from 'react-bootstrap';
 
 const FieldOptions = ({ options, fields, isUniqueData, onSelect }) => {
   return options.map(option => {

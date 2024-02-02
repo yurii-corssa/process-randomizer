@@ -7,7 +7,6 @@ import {
   DropdownButton,
   FormControl,
   InputGroup,
-  SplitButton,
 } from 'react-bootstrap';
 
 const Field = ({
@@ -41,8 +40,9 @@ const Field = ({
       />
       <DropdownButton
         id="input-group-dropdown-1"
-        variant="outline-primary"
+        variant="outline-secondary"
         disabled={disabled}
+        title={<LuChevronDown />}
       >
         <FieldOptions
           options={data}
@@ -53,8 +53,7 @@ const Field = ({
       </DropdownButton>
 
       <Button
-        // className="btn btn-outline-secondary d-flex align-items-center"
-        variant="outline-primary"
+        variant="outline-secondary"
         onClick={() => deleteField(fields, setFields, id, value)}
         disabled={isLastField || disabled}
       >

@@ -2,29 +2,30 @@ import { useEffect } from 'react';
 import Field from './Field';
 import { LuListPlus } from 'react-icons/lu';
 import { addField } from 'utils/addField';
+import { Button, Form } from 'react-bootstrap';
 
-const ManuallyForm = ({ data, fields, setFields, isUniqueData, disabled }) => {
+const ManuallyForm = ({
+  label,
+  data,
+  fields,
+  setFields,
+  isUniqueData,
+  disabled,
+}) => {
   useEffect(() => {
     if (!fields.length) {
       addField(setFields);
     }
-  }, []);
+  }, [fields.length, setFields]);
 
   return (
-    <form
-      style={{
-        height: '40vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-      }}
-    >
+    <Form className="fields-form">
       <div className="fields-container">
         {fields.map(({ id, value }) => {
           return (
             <Field
               key={id}
-              label="Process"
+              label={label}
               id={id}
               value={value}
               data={data}
@@ -38,16 +39,15 @@ const ManuallyForm = ({ data, fields, setFields, isUniqueData, disabled }) => {
         })}
       </div>
 
-      <button
-        type="button"
-        className="btn btn-primary"
+      <Button
+        className="form-btn"
         disabled={disabled}
         onClick={() => addField(setFields)}
       >
         <LuListPlus />
         Add Field
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 
