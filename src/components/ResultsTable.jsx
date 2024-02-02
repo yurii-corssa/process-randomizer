@@ -1,8 +1,9 @@
+import { Table } from 'react-bootstrap';
 import TableItem from './TableItem';
 
 const ResultsTable = ({ data }) => {
   return (
-    <table className="table table-striped table-hover">
+    <Table striped hover>
       <thead>
         <tr>
           <th>Process</th>
@@ -14,7 +15,7 @@ const ResultsTable = ({ data }) => {
           return <TableItem key={worker} process={process} worker={worker} />;
         })}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

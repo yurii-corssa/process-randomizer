@@ -1,61 +1,65 @@
+import { selectValue } from 'utils/selectValue';
 import FieldOptions from './FieldOptions';
 import { LuTrash, LuChevronDown } from 'react-icons/lu';
+import { deleteField } from 'utils/deleteField';
+import {
+  Button,
+  DropdownButton,
+  FormControl,
+  InputGroup,
+} from 'react-bootstrap';
 
 const Field = ({
   label,
   id,
   value,
-  fields,
   data,
+  fields,
+  setFields,
   isLastField,
-  onChange,
-  onDelete,
+  isUniqueData,
+  disabled,
 }) => {
-  const handleChange = e => {
-    onChange(id, e.target.value);
+  const handleWriteChange = e => {
+    selectValue(fields, setFields, id, e.target.value);
   };
 
   const handleSelectValue = value => {
-    onChange(id, value);
+    selectValue(fields, setFields, id, value);
   };
 
   return (
-    <div className="input-group mb-3 dropdown">
-      <input
+    <InputGroup className="mb-2">
+      <FormControl
         type="text"
-        className="form-control"
         placeholder={label}
         aria-label={label}
-        aria-describedby="button-addon2"
         value={value}
-        onChange={handleChange}
+        disabled={disabled}
+        onChange={handleWriteChange}
       />
-      <button
-        className="btn btn-outline-secondary d-flex align-items-center"
-        id="button-addon2"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+      <DropdownButton
+        id="input-group-dropdown-1"
+        variant="outline-secondary"
+        disabled={disabled}
+        title={<LuChevronDown />}
       >
-        <LuChevronDown />
-      </button>
-
-      <ul className="dropdown-menu dropdown-menu-end">
         <FieldOptions
           options={data}
           fields={fields ? fields : []}
+          isUniqueData={isUniqueData}
           onSelect={handleSelectValue}
         />
-      </ul>
-      <button
-        className="btn btn-outline-secondary d-flex align-items-center"
-        type="button"
-        onClick={() => onDelete(id, value)}
-        disabled={isLastField}
+      </DropdownButton>
+
+      <Button
+        variant="outline-secondary"
+        onClick={() => deleteField(fields, setFields, id, value)}
+        disabled={isLastField || disabled}
       >
         <LuTrash />
-      </button>
-    </div>
+      </Button>
+    </InputGroup>
   );
 };
 

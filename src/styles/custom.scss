@@ -1,62 +1,248 @@
-$body-bg: #d8dee9;
-$body-color: #2e3440;
-$input-bg: #e5e9f0;
-$input-disabled-bg: #d8dee9;
-$border-color: #667080;
-$dropdown-link-active-bg: #667080;
-$table-bg: #eceff4;
+// Основные цвета темы
+$primary: #005aa7;
+$secondary: #ffd700;
+$success: #4dbd74;
+$info: #35a6d6;
+$warning: #f0ad4e;
+$danger: #d9534f;
+$light: #eceff4;
+$dark: #2e3440;
+$white: #ffffff;
 
-$theme-colors: (
-  'primary': #4c566a,
-  'secondary': #667080,
-  'success': #8fbcbb,
-  'info': #88c0d0,
-  'warning': #ebcb8b,
-  'danger': #bf616a,
-  'light': #d8dee9,
-  'dark': #4c566a,
-);
+// Цвета фона
+$background: $white;
+$body-bg: $light;
+$body-color: $dark;
+
+// Цвета границ
+$border-color: darken($light, 10%);
+
+// Цвета текста
+$text-color: $dark;
+$text-muted: lighten($dark, 30%);
+
+// Цвета ссылок
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: darken($primary, 15%);
+$link-hover-decoration: underline;
+
+// Цвета для отключенных состояний
+$gray-100: #f8f9fa;
+$gray-600: #6c757d;
+$gray-900: #212529;
+
+// Цвета кнопок (пример)
+$btn-primary-bg: $primary;
+$btn-primary-border: darken($primary, 10%);
+$btn-secondary-bg: $secondary;
+$btn-secondary-border: darken($secondary, 10%);
+
+// Дополнительные цвета компонентов (пример)
+$navbar-bg: $primary;
+$navbar-dark-color: lighten($dark, 30%);
+$navbar-dark-hover-color: $light;
+$navbar-dark-active-color: $light;
+
+$card-bg: $background;
+$card-border-color: $border-color;
+
+$alert-success-bg: lighten($success, 40%);
+$alert-success-border-color: darken($success, 10%);
+$alert-success-color: darken($success, 50%);
+
+// Модальные окна
+$modal-content-bg: $background;
+$modal-content-border-color: $border-color;
+$modal-content-color: $text-color;
+
+$modal-header-border-color: darken($background, 10%);
+$modal-footer-border-color: $modal-header-border-color;
+
+// Алерты
+$alert-info-bg: lighten($info, 40%);
+$alert-info-border-color: darken($info, 10%);
+$alert-info-color: darken($info, 50%);
+
+$alert-warning-bg: lighten($warning, 40%);
+$alert-warning-border-color: darken($warning, 10%);
+$alert-warning-color: darken($warning, 50%);
+
+$alert-danger-bg: lighten($danger, 40%);
+$alert-danger-border-color: darken($danger, 10%);
+$alert-danger-color: darken($danger, 50%);
+
+$alert-primary-bg: lighten($primary, 40%);
+$alert-primary-border-color: darken($primary, 10%);
+$alert-primary-color: darken($primary, 50%);
+
+// Пагинация
+$pagination-color: $link-color;
+$pagination-bg: $body-bg;
+$pagination-border-color: $border-color;
+
+$pagination-hover-color: $link-hover-color;
+$pagination-hover-bg: darken($background, 5%);
+$pagination-hover-border-color: darken($border-color, 5%);
+
+$pagination-active-color: $body-color;
+$pagination-active-bg: $primary;
+$pagination-active-border-color: darken($primary, 10%);
+
+// Формы
+$input-bg: $body-bg;
+$input-border-color: $border-color;
+$input-color: $text-color;
+
+$input-focus-bg: $input-bg;
+$input-focus-border-color: $primary;
+$input-focus-color: $input-color;
+
+$input-placeholder-color: $text-muted;
+
+// Кнопки
+$btn-default-bg: $body-bg;
+$btn-default-border: darken($body-bg, 10%);
+$btn-default-color: $text-color;
+
+$btn-focus-box-shadow: 0 0 0 0.2rem rgba($primary, 0.5);
+$btn-active-box-shadow: inset 0 3px 5px rgba($dark, 0.125);
+
+// Навигационная панель
+$nav-link-color: lighten($dark, 20%);
+$nav-link-hover-color: lighten($dark, 10%);
+$nav-link-hover-bg: $light;
+
+// Дропдауны
+$dropdown-bg: $body-bg;
+$dropdown-border-color: $border-color;
+$dropdown-link-color: $text-color;
+$dropdown-link-hover-color: $text-color;
+$dropdown-link-hover-bg: $light;
+
+// Хлебные крошки
+$breadcrumb-bg: lighten($background, 5%);
+$breadcrumb-divider-color: $text-color;
+$breadcrumb-active-color: $text-muted;
+
+// Карточки
+$card-cap-bg: darken($background, 5%);
+$card-border-color: $border-color;
+
+// Тосты
+$toast-background-color: $body-bg;
+$toast-border-color: $border-color;
+$toast-color: $text-color;
+
+// Тултипы
+$tooltip-bg: $dark;
+$tooltip-color: $light;
+
+// Поповеры
+$popover-bg: $body-bg;
+$popover-border-color: $border-color;
+$popover-header-bg: darken($background, 5%);
+$popover-color: $text-color;
+
+// Прогресс-бары
+$progress-bg: lighten($background, 10%);
+$progress-bar-color: $light;
+$progress-bar-bg: $primary;
+
+// Джамботрон
+$jumbotron-bg: lighten($primary, 50%);
+$jumbotron-color: darken($primary, 50%);
 
 @import '~bootstrap/scss/bootstrap';
 
-.background-card {
-  padding: 25px 15px;
-  border-radius: 15px;
-  background-color: #eceff4;
+.dropdown-toggle::after {
+  content: none;
+}
+
+.dropdown-item:hover {
+  background-color: lighten($light, 50%);
+}
+
+.fields-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40vh;
 }
 
 .fields-container {
-  width: 320px;
-  height: 40vh;
+  width: 300px;
+  height: 100%;
   padding: 5px;
   margin-bottom: 20px;
   overflow-y: scroll;
 }
 
 .checks-container {
-  display: flex;
-  flex-direction: column;
-  width: 320px;
-  height: 40vh;
+  width: 300px;
+  height: 100%;
   padding: 5px;
   margin-bottom: 20px;
   overflow-y: scroll;
 }
 
 .check-item {
-  // display: flex;
-  // align-items: center;
-  gap: 0.5rem;
-  padding-left: 2rem;
+  display: flex;
+  border-radius: var(--bs-border-radius);
+  cursor: pointer;
+
+  .check-btn {
+    padding: 0.5rem;
+    cursor: inherit;
+
+    input {
+      cursor: inherit;
+    }
+  }
+
+  label {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0;
+    cursor: inherit;
+  }
 
   &:hover {
     background-color: $input-bg;
   }
 }
 
-.form-check-label {
-  width: 100%;
+.form-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
+
+.table {
+  min-width: 100%;
+}
+
+// .background-card {
+//   padding: 25px 15px;
+//   border-radius: 15px;
+//   background-color: #eceff4;
+// }
+
+// .check-item {
+//   // display: flex;
+//   // align-items: center;
+//   gap: 0.5rem;
+//   padding-left: 2rem;
+
+//   &:hover {
+//     background-color: $input-bg;
+//   }
+// }
+
+// .form-check-label {
+//   width: 100%;
+// }
 
 .dropdown {
   position: static;
@@ -66,29 +252,29 @@ $theme-colors: (
   position: static;
 }
 
-.dropdown-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-}
+// .dropdown-menu {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   z-index: 9999;
+// }
 
-.table {
-  min-width: 640px;
+// .table {
+//   min-width: 640px;
 
-  th:nth-child(odd) {
-    width: 40%;
-  }
+//   th:nth-child(odd) {
+//     width: 40%;
+//   }
 
-  th:nth-child(even) {
-    width: 60%;
-  }
-}
+//   th:nth-child(even) {
+//     width: 60%;
+//   }
+// }
 
-.btn-primary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-}
+// .btn-primary {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 0.5rem;
+//   width: 100%;
+// }

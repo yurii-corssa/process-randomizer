@@ -1,22 +1,11 @@
 import db from './db.json';
 import { useCallback, useEffect, useState } from 'react';
-import ProcessesForm from './ProcessesForm';
-import WorkersForm from './WorkersForm';
-import { createField } from 'utils/createField';
+import ManuallyForm from './ManuallyForm';
 import ResultsTable from './ResultsTable';
 import BackgroundCard from './BackgroundCard';
-import ValueSelection from './ValueSelection';
+import SelectForm from './SelectForm';
 import ConfettiExplosion from 'react-confetti-explosion';
-
-const initialWorkerField = {
-  id: '',
-  value: '',
-};
-
-const initialProcessField = {
-  id: '',
-  value: '',
-};
+import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 
 const Randomizer = () => {
   const [dataProcesses, setDataProcesses] = useState({});
@@ -24,9 +13,6 @@ const Randomizer = () => {
 
   const [processFields, setProcessFields] = useState([]);
   const [workerFields, setWorkerFields] = useState([]);
-
-  const [processFormStep, setProcessFormStep] = useState(1);
-  const [workersFormStep, setWorkersFormStep] = useState(1);
 
   const [randomValues, setRandomValues] = useState([]);
 
@@ -98,86 +84,6 @@ const Randomizer = () => {
     };
   }, [iterationSpeed, runRundomize]);
 
-  const addProcessField = (data = initialProcessField) => {
-    const newField = createField(data);
-    setProcessFields(prev => [...prev, newField]);
-  };
-
-  const addWorkerField = (data = initialWorkerField) => {
-    const newField = createField(data);
-    setWorkerFields(prev => [...prev, newField]);
-  };
-
-  const handleChangeProcess = (id, value) => {
-    setProcessFields(
-      processFields.map(process =>
-        process.id === id ? { ...process, value } : process
-      )
-    );
-  };
-
-  const handleChangeWorker = (id, value) => {
-    setWorkerFields(
-      workerFields.map(worker =>
-        worker.id === id ? { ...worker, value } : worker
-      )
-    );
-  };
-
-  const handleCheckboxChangeProcess = value => {
-    const isChecked = processFields.some(field => field.value === value);
-
-    if (isChecked) {
-      return setProcessFields(prev =>
-        prev.filter(field => field.value !== value)
-      );
-    } else {
-      return addProcessField({ value });
-    }
-  };
-
-  const handleCheckboxChangeWorkers = value => {
-    const isChecked = workerFields.some(field => field.value === value);
-
-    if (isChecked) {
-      return setWorkerFields(prev =>
-        prev.filter(field => field.value !== value)
-      );
-    } else {
-      return addWorkerField({ value });
-    }
-  };
-
-  const handleDeleteWorker = id => {
-    setWorkerFields(workerFields.filter(worker => worker.id !== id));
-  };
-
-  const handleDeleteProcess = id => {
-    setProcessFields(processFields.filter(process => process.id !== id));
-  };
-
-  const handleChangeStepProcess = step => {
-    if (step === 1) {
-      setProcessFormStep(1);
-    }
-
-    if (step === 2) {
-      if (step === 2) {
-        setProcessFormStep(2);
-      }
-    }
-  };
-
-  const handleChangeStepWorkers = step => {
-    if (step === 1) {
-      setWorkersFormStep(1);
-    }
-
-    if (step === 2) {
-      setWorkersFormStep(2);
-    }
-  };
-
   const handleClick = () => {
     if (processFields.length && workerFields.length) {
       setIsRandomizing(true);
@@ -188,69 +94,81 @@ const Randomizer = () => {
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <>
-      <section className="container p-3 d-flex flex-column gap-4">
-        <div className="d-flex gap-5 justify-content-center">
-          <BackgroundCard>
-            {processFormStep === 1 && (
-              <ValueSelection
-                data={dataProcesses}
-                fields={processFields}
-                onCheckboxChange={handleCheckboxChangeProcess}
-                changeStep={handleChangeStepProcess}
-                disabled={isRandomizing}
-              />
-            )}
-            {processFormStep === 2 && (
-              <ProcessesForm
-                data={dataProcesses}
-                fields={processFields}
-                addField={addProcessField}
-                onChange={handleChangeProcess}
-                onDelete={handleDeleteProcess}
-                changeStep={handleChangeStepProcess}
-              />
-            )}
+    <Stack as="main">
+      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
+        <Stack bsPrefix="hstack" gap={5} className="justify-content-between">
+          <BackgroundCard title="Processes">
+            <Tabs
+              defaultActiveKey="select"
+              id="fill-tab-example"
+              className="mb-3"
+              fill
+            >
+              <Tab eventKey="select" title="Select">
+                <SelectForm
+                  data={dataProcesses}
+                  fields={processFields}
+                  setFields={setProcessFields}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+              <Tab eventKey="manually" title="Manually">
+                <ManuallyForm
+                  label="Process"
+                  data={dataProcesses}
+                  fields={processFields}
+                  setFields={setProcessFields}
+                  isUniqueData={false}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+            </Tabs>
           </BackgroundCard>
 
-          <BackgroundCard>
-            {explosion && (
-              <ConfettiExplosion
-                force={0.8}
-                duration={3000}
-                particleCount={250}
-              />
-            )}
-            {workersFormStep === 1 && (
-              <ValueSelection
-                data={dataWorkers}
-                fields={workerFields}
-                onCheckboxChange={handleCheckboxChangeWorkers}
-                changeStep={handleChangeStepWorkers}
-                disabled={isRandomizing}
-              />
-            )}
-            {workersFormStep === 2 && (
-              <WorkersForm
-                data={dataWorkers}
-                fields={workerFields}
-                addField={addWorkerField}
-                onChange={handleChangeWorker}
-                onDelete={handleDeleteWorker}
-                changeStep={handleChangeStepWorkers}
-              />
-            )}
+          <BackgroundCard title="Employees">
+            <Tabs
+              defaultActiveKey="select"
+              id="fill-tab-example"
+              className="mb-3"
+              fill
+            >
+              <Tab eventKey="select" title="Select">
+                <SelectForm
+                  data={dataWorkers}
+                  fields={workerFields}
+                  setFields={setWorkerFields}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+              <Tab eventKey="manually" title="Manually">
+                <ManuallyForm
+                  label="Employee"
+                  data={dataWorkers}
+                  fields={workerFields}
+                  setFields={setWorkerFields}
+                  isUniqueData={true}
+                  disabled={isRandomizing}
+                />
+              </Tab>
+            </Tabs>
           </BackgroundCard>
-        </div>
-        <div className="d-flex justify-content-center">
-          <button
-            type="button"
-            className="btn btn-primary w-25"
+        </Stack>
+
+        <Stack bsPrefix="hstack" className="justify-content-center" gap={4}>
+          <Button
+            className="w-25"
             onClick={handleClick}
             disabled={isRandomizing}
           >
             Go
-          </button>
+          </Button>
+          <Button
+            className="w-25"
+            onClick={() => window.location.reload()}
+            disabled={isRandomizing}
+          >
+            Reset
+          </Button>
           {explosion && (
             <ConfettiExplosion
               force={0.8}
@@ -258,10 +176,11 @@ const Randomizer = () => {
               particleCount={250}
             />
           )}
-        </div>
-      </section>
-      <section className="container d-flex flex-column gap-5 align-items-center">
-        <BackgroundCard>
+        </Stack>
+      </Stack>
+
+      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
+        <BackgroundCard title="Results Table">
           {explosion && (
             <ConfettiExplosion
               force={0.8}
@@ -271,8 +190,8 @@ const Randomizer = () => {
           )}
           <ResultsTable data={randomValues} />
         </BackgroundCard>
-      </section>
-    </>
+      </Stack>
+    </Stack>
   );
 };
 
