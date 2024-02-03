@@ -8,6 +8,10 @@ body {
     Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 }
 
+.container {
+  padding-bottom: 80px;
+}
+
 .dropdown-toggle::after {
   content: none;
 }
@@ -106,6 +110,16 @@ body {
 
   th:nth-child(even) {
     width: 60%;
+  }
+}
+
+footer {
+  background-color: $dark;
+  color: $light;
+  padding-top: 80px;
+
+  & a {
+    color: $secondary;
   }
 }
 

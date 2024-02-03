@@ -4,7 +4,7 @@ import TableItem from './TableItem';
 const ResultsTable = ({ data }) => {
   return (
     <div className="table-wrapper">
-      <Table striped hover>
+      <Table striped hover id="table">
         <thead>
           <tr>
             <th>Processes</th>

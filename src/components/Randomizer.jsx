@@ -6,6 +6,7 @@ import BackgroundCard from './BackgroundCard';
 import SelectForm from './SelectForm';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
+import Footer from './Footer';
 
 const Randomizer = () => {
   const [dataProcesses, setDataProcesses] = useState({});
