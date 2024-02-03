@@ -1,0 +1,44 @@
+$primary: #021d49;
+$secondary: #e1261c;
+$light: #f1f2f4;
+$dark: #021d49;
+$white: #ffffff;
+
+$background: $white;
+$body-bg: $primary;
+$body-color: $dark;
+
+$border-color: darken($light, 10%);
+
+$text-color: $dark;
+$text-muted: darken($light, 30%);
+
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: darken($primary, 15%);
+$link-hover-decoration: underline;
+$nav-tabs-link-active-bg: $white;
+
+$btn-primary-bg: $primary;
+$btn-primary-border: darken($primary, 10%);
+$btn-secondary-bg: $secondary;
+$btn-secondary-border: darken($secondary, 10%);
+
+$card-bg: $background;
+$card-border-color: $border-color;
+
+$input-bg: $light;
+$input-border-color: $border-color;
+$input-color: $text-color;
+$input-placeholder-color: $text-muted;
+
+$dropdown-bg: $light;
+$dropdown-border-color: $border-color;
+$dropdown-link-color: $text-color;
+$dropdown-link-hover-bg: $light;
+
+$card-cap-bg: darken($background, 5%);
+$card-border-color: $border-color;
+
+$table-bg: $white;
+$table-color: $dark;

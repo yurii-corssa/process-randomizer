@@ -1,159 +1,12 @@
-// Основные цвета темы
-$primary: #005aa7;
-$secondary: #ffd700;
-$success: #4dbd74;
-$info: #35a6d6;
-$warning: #f0ad4e;
-$danger: #d9534f;
-$light: #eceff4;
-$dark: #2e3440;
-$white: #ffffff;
-
-// Цвета фона
-$background: $white;
-$body-bg: $light;
-$body-color: $dark;
-
-// Цвета границ
-$border-color: darken($light, 10%);
-
-// Цвета текста
-$text-color: $dark;
-$text-muted: lighten($dark, 30%);
-
-// Цвета ссылок
-$link-color: $primary;
-$link-decoration: none;
-$link-hover-color: darken($primary, 15%);
-$link-hover-decoration: underline;
-
-// Цвета для отключенных состояний
-$gray-100: #f8f9fa;
-$gray-600: #6c757d;
-$gray-900: #212529;
-
-// Цвета кнопок (пример)
-$btn-primary-bg: $primary;
-$btn-primary-border: darken($primary, 10%);
-$btn-secondary-bg: $secondary;
-$btn-secondary-border: darken($secondary, 10%);
-
-// Дополнительные цвета компонентов (пример)
-$navbar-bg: $primary;
-$navbar-dark-color: lighten($dark, 30%);
-$navbar-dark-hover-color: $light;
-$navbar-dark-active-color: $light;
-
-$card-bg: $background;
-$card-border-color: $border-color;
-
-$alert-success-bg: lighten($success, 40%);
-$alert-success-border-color: darken($success, 10%);
-$alert-success-color: darken($success, 50%);
-
-// Модальные окна
-$modal-content-bg: $background;
-$modal-content-border-color: $border-color;
-$modal-content-color: $text-color;
-
-$modal-header-border-color: darken($background, 10%);
-$modal-footer-border-color: $modal-header-border-color;
-
-// Алерты
-$alert-info-bg: lighten($info, 40%);
-$alert-info-border-color: darken($info, 10%);
-$alert-info-color: darken($info, 50%);
-
-$alert-warning-bg: lighten($warning, 40%);
-$alert-warning-border-color: darken($warning, 10%);
-$alert-warning-color: darken($warning, 50%);
-
-$alert-danger-bg: lighten($danger, 40%);
-$alert-danger-border-color: darken($danger, 10%);
-$alert-danger-color: darken($danger, 50%);
-
-$alert-primary-bg: lighten($primary, 40%);
-$alert-primary-border-color: darken($primary, 10%);
-$alert-primary-color: darken($primary, 50%);
-
-// Пагинация
-$pagination-color: $link-color;
-$pagination-bg: $body-bg;
-$pagination-border-color: $border-color;
-
-$pagination-hover-color: $link-hover-color;
-$pagination-hover-bg: darken($background, 5%);
-$pagination-hover-border-color: darken($border-color, 5%);
-
-$pagination-active-color: $body-color;
-$pagination-active-bg: $primary;
-$pagination-active-border-color: darken($primary, 10%);
-
-// Формы
-$input-bg: $body-bg;
-$input-border-color: $border-color;
-$input-color: $text-color;
-
-$input-focus-bg: $input-bg;
-$input-focus-border-color: $primary;
-$input-focus-color: $input-color;
-
-$input-placeholder-color: $text-muted;
-
-// Кнопки
-$btn-default-bg: $body-bg;
-$btn-default-border: darken($body-bg, 10%);
-$btn-default-color: $text-color;
-
-$btn-focus-box-shadow: 0 0 0 0.2rem rgba($primary, 0.5);
-$btn-active-box-shadow: inset 0 3px 5px rgba($dark, 0.125);
-
-// Навигационная панель
-$nav-link-color: lighten($dark, 20%);
-$nav-link-hover-color: lighten($dark, 10%);
-$nav-link-hover-bg: $light;
-
-// Дропдауны
-$dropdown-bg: $body-bg;
-$dropdown-border-color: $border-color;
-$dropdown-link-color: $text-color;
-$dropdown-link-hover-color: $text-color;
-$dropdown-link-hover-bg: $light;
-
-// Хлебные крошки
-$breadcrumb-bg: lighten($background, 5%);
-$breadcrumb-divider-color: $text-color;
-$breadcrumb-active-color: $text-muted;
-
-// Карточки
-$card-cap-bg: darken($background, 5%);
-$card-border-color: $border-color;
-
-// Тосты
-$toast-background-color: $body-bg;
-$toast-border-color: $border-color;
-$toast-color: $text-color;
-
-// Тултипы
-$tooltip-bg: $dark;
-$tooltip-color: $light;
-
-// Поповеры
-$popover-bg: $body-bg;
-$popover-border-color: $border-color;
-$popover-header-bg: darken($background, 5%);
-$popover-color: $text-color;
-
-// Прогресс-бары
-$progress-bg: lighten($background, 10%);
-$progress-bar-color: $light;
-$progress-bar-bg: $primary;
-
-// Джамботрон
-$jumbotron-bg: lighten($primary, 50%);
-$jumbotron-color: darken($primary, 50%);
-
+@import './theme.scss';
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,700&display=swap');
+
+body {
+  font-family: Nunito Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
 
 .dropdown-toggle::after {
   content: none;
@@ -171,7 +24,6 @@ $jumbotron-color: darken($primary, 50%);
 }
 
 .fields-container {
-  width: 300px;
   height: 100%;
   padding: 5px;
   margin-bottom: 20px;
@@ -179,7 +31,6 @@ $jumbotron-color: darken($primary, 50%);
 }
 
 .checks-container {
-  width: 300px;
   height: 100%;
   padding: 5px;
   margin-bottom: 20px;
@@ -190,6 +41,15 @@ $jumbotron-color: darken($primary, 50%);
   display: flex;
   border-radius: var(--bs-border-radius);
   cursor: pointer;
+
+  .form-check-input {
+    transition: background-color 0.3s ease-out, border-color 0.3s ease-out;
+  }
+
+  .form-check-input:checked {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
 
   .check-btn {
     padding: 0.5rem;
@@ -223,26 +83,9 @@ $jumbotron-color: darken($primary, 50%);
   min-width: 100%;
 }
 
-// .background-card {
-//   padding: 25px 15px;
-//   border-radius: 15px;
-//   background-color: #eceff4;
-// }
-
-// .check-item {
-//   // display: flex;
-//   // align-items: center;
-//   gap: 0.5rem;
-//   padding-left: 2rem;
-
-//   &:hover {
-//     background-color: $input-bg;
-//   }
-// }
-
-// .form-check-label {
-//   width: 100%;
-// }
+.nav-link {
+  background-color: $light;
+}
 
 .dropdown {
   position: static;
@@ -252,29 +95,22 @@ $jumbotron-color: darken($primary, 50%);
   position: static;
 }
 
-// .dropdown-menu {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   z-index: 9999;
-// }
+.table-wrapper {
+  min-height: 40vh;
+}
 
-// .table {
-//   min-width: 640px;
+.table {
+  th:nth-child(odd) {
+    width: 40%;
+  }
 
-//   th:nth-child(odd) {
-//     width: 40%;
-//   }
+  th:nth-child(even) {
+    width: 60%;
+  }
+}
 
-//   th:nth-child(even) {
-//     width: 60%;
-//   }
-// }
-
-// .btn-primary {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   gap: 0.5rem;
-//   width: 100%;
-// }
+@media screen and (max-width: 768px) {
+  .form-cards {
+    flex-direction: column;
+  }
+}

@@ -94,9 +94,13 @@ const Randomizer = () => {
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <Stack as="main">
-      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
-        <Stack bsPrefix="hstack" gap={5} className="justify-content-between">
+    <Stack as="main" className="container">
+      <Stack as="section" gap={4} className="p-3">
+        <Stack
+          bsPrefix="hstack"
+          gap={5}
+          className="justify-content-between form-cards"
+        >
           <BackgroundCard title="Processes">
             <Tabs
               defaultActiveKey="select"
@@ -156,6 +160,7 @@ const Randomizer = () => {
 
         <Stack bsPrefix="hstack" className="justify-content-center" gap={4}>
           <Button
+            variant="secondary"
             className="w-25"
             onClick={handleClick}
             disabled={isRandomizing}
@@ -163,23 +168,16 @@ const Randomizer = () => {
             Go
           </Button>
           <Button
+            variant="secondary"
             className="w-25"
             onClick={() => window.location.reload()}
-            disabled={isRandomizing}
           >
             Reset
           </Button>
-          {explosion && (
-            <ConfettiExplosion
-              force={0.8}
-              duration={3000}
-              particleCount={250}
-            />
-          )}
         </Stack>
       </Stack>
 
-      <Stack as="section" gap={4} className="p-3 w-50 mx-auto">
+      <Stack as="section" gap={4} className="p-3">
         <BackgroundCard title="Results Table">
           {explosion && (
             <ConfettiExplosion

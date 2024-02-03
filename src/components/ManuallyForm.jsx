@@ -41,6 +41,7 @@ const ManuallyForm = ({
 
       <Button
         className="form-btn"
+        variant="secondary"
         disabled={disabled}
         onClick={() => addField(setFields)}
       >
