@@ -1,4 +1,4 @@
-import { Container, Row, Col, Stack } from 'react-bootstrap';
+import { Container, Stack } from 'react-bootstrap';
 
 const Footer = () => (
   <Stack as="footer">
