@@ -1,195 +1,177 @@
+import { useEffect, useState } from 'react';
 import db from './db.json';
-import { useCallback, useEffect, useState } from 'react';
-import ManuallyForm from './ManuallyForm';
-import ResultsTable from './ResultsTable';
-import BackgroundCard from './BackgroundCard';
-import SelectForm from './SelectForm';
-import ConfettiExplosion from 'react-confetti-explosion';
-import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
+import { Card, Stack } from 'react-bootstrap';
+import { nanoid } from 'nanoid';
+import { validateEmployees, validateProcesses } from 'utils/validation';
+import RandomizerForm from './RandomizerForm';
+import Confetti from './Confetti';
+import ResultTable from './ResultTable';
+
+const animationDuration = 5800;
+
+const bezier = (t, i, p1, p2, f) =>
+  (1 - t) * (1 - t) * (1 - t) * i +
+  3 * (1 - t) * (1 - t) * t * p1 +
+  3 * (1 - t) * t * t * p2 +
+  t * t * t * f;
+
+const shuffleArray = array => {
+  const shuffled = [...array];
+
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+
+    const temp = shuffled[index];
+    shuffled[index] = shuffled[randomIndex];
+    shuffled[randomIndex] = temp;
+  }
+  return shuffled;
+};
 
 const Randomizer = () => {
-  const [dataProcesses, setDataProcesses] = useState({});
-  const [dataWorkers, setDataWorkers] = useState({});
+  const [processList, setProcessList] = useState([]);
+  const [employeeList, setEmployeeList] = useState([]);
 
-  const [processFields, setProcessFields] = useState([]);
-  const [workerFields, setWorkerFields] = useState([]);
+  const [selectedProcesses, setSelectedProcesses] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
 
-  const [randomValues, setRandomValues] = useState([]);
+  const [resultList, setResultList] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [iterationSpeed, setIterationSpeed] = useState(0);
+  const [errorMessage, setErrorMessage] = useState({
+    process: null,
+    employee: null,
+  });
+  const [isValid, setIsValid] = useState({ process: false, employee: false });
 
   const [isRandomizing, setIsRandomizing] = useState(false);
-
-  const [explosion, setExplosion] = useState(false);
-
-  const runRundomize = useCallback(() => {
-    const selectedWorkers = workerFields
-      .filter(worker => worker.value)
-      .map(worker => worker.value);
-
-    const selectedProcess = processFields
-      .filter(process => process.value)
-      .map(process => process.value);
-
-    if (selectedProcess.length > selectedWorkers.length) {
-      alert('not enough employees have been selected');
-      return;
-    }
-
-    const iteratedProcesses = selectedProcess.map(process => {
-      const workersCount = selectedWorkers.length;
-      const randomNumber = Math.floor(Math.random() * workersCount);
-
-      const processItem = { process, worker: selectedWorkers[randomNumber] };
-
-      selectedWorkers.splice(randomNumber, 1);
-
-      return processItem;
-    });
-
-    setRandomValues(iteratedProcesses);
-
-    if (iterationSpeed < 700) {
-      setIterationSpeed(prev => prev * 1.1);
-    } else if (iterationSpeed < 1000) {
-      setIterationSpeed(prev => prev * 1.2);
-    } else if (iterationSpeed < 1400) {
-      setIterationSpeed(prev => prev * 1.3);
-    } else {
-      setIsRandomizing(false);
-      setIterationSpeed(0);
-      setExplosion(true);
-      setTimeout(() => setExplosion(false), 4000);
-    }
-  }, [iterationSpeed, processFields, workerFields]);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
-    const data = db;
-    setDataProcesses(data.processes);
-    setDataWorkers(data.workers);
-    setIsLoading(false);
+    const fetchData = async () => {
+      try {
+        const data = await new Promise(resolve =>
+          setTimeout(() => resolve(db), 2000)
+        );
+
+        setProcessList(data.processes);
+        setEmployeeList(data.employees);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    let timeoutId = null;
-
-    if (iterationSpeed) {
-      timeoutId = setTimeout(runRundomize, iterationSpeed);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [iterationSpeed, runRundomize]);
-
-  const handleClick = () => {
-    if (processFields.length && workerFields.length) {
-      setIsRandomizing(true);
-      setIterationSpeed(10);
-    }
+  const handleSelectProcesses = newProcesses => {
+    const updatedProcesses = newProcesses.map((process, idx) =>
+      idx === newProcesses.length - 1
+        ? { value: process.value, id: nanoid(6) }
+        : process
+    );
+    setSelectedProcesses(updatedProcesses);
   };
 
-  return isLoading ? (
-    <div>Loading...</div>
-  ) : (
-    <Stack as="main" className="container">
-      <Stack as="section" gap={4} className="p-3">
-        <Stack
-          bsPrefix="hstack"
-          gap={5}
-          className="justify-content-between form-cards"
-        >
-          <BackgroundCard title="Processes">
-            <Tabs
-              defaultActiveKey="select"
-              id="fill-tab-example"
-              className="mb-3"
-              fill
-            >
-              <Tab eventKey="select" title="Select">
-                <SelectForm
-                  data={dataProcesses}
-                  fields={processFields}
-                  setFields={setProcessFields}
-                  disabled={isRandomizing}
-                />
-              </Tab>
-              <Tab eventKey="manually" title="Manually">
-                <ManuallyForm
-                  label="Process"
-                  data={dataProcesses}
-                  fields={processFields}
-                  setFields={setProcessFields}
-                  isUniqueData={false}
-                  disabled={isRandomizing}
-                />
-              </Tab>
-            </Tabs>
-          </BackgroundCard>
+  const startRandomization = () => {
+    setIsRandomizing(true);
 
-          <BackgroundCard title="Employees">
-            <Tabs
-              defaultActiveKey="select"
-              id="fill-tab-example"
-              className="mb-3"
-              fill
-            >
-              <Tab eventKey="select" title="Select">
-                <SelectForm
-                  data={dataWorkers}
-                  fields={workerFields}
-                  setFields={setWorkerFields}
-                  disabled={isRandomizing}
-                />
-              </Tab>
-              <Tab eventKey="manually" title="Manually">
-                <ManuallyForm
-                  label="Employee"
-                  data={dataWorkers}
-                  fields={workerFields}
-                  setFields={setWorkerFields}
-                  isUniqueData={true}
-                  disabled={isRandomizing}
-                />
-              </Tab>
-            </Tabs>
-          </BackgroundCard>
-        </Stack>
+    const startTime = performance.now();
+    const employeesSnapshot = [...selectedEmployees];
 
-        <Stack bsPrefix="hstack" className="justify-content-center" gap={4}>
-          <Button
-            variant="secondary"
-            className="w-25"
-            onClick={handleClick}
-            disabled={isRandomizing}
-          >
-            Go
-          </Button>
-          <Button
-            variant="secondary"
-            className="w-25"
-            onClick={() => window.location.reload()}
-          >
-            Reset
-          </Button>
-        </Stack>
-      </Stack>
+    let frameId;
 
-      <Stack as="section" gap={4} className="p-3">
-        <BackgroundCard title="Results Table">
-          {explosion && (
-            <ConfettiExplosion
-              force={0.8}
-              duration={3000}
-              particleCount={250}
+    const animate = currentTime => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / animationDuration, 1);
+      const easedProgress = bezier(progress, 0, 0.5, 0.5, 1);
+      const delay = easedProgress * 280;
+
+      const shuffledEmployees = shuffleArray(employeesSnapshot);
+      const resultList = selectedProcesses.map((process, index) => {
+        const employee = shuffledEmployees[index % shuffledEmployees.length];
+
+        return { process, employee };
+      });
+
+      setResultList(resultList);
+
+      if (elapsed < animationDuration) {
+        setTimeout(() => {
+          frameId = requestAnimationFrame(animate);
+        }, delay);
+      } else {
+        setIsRandomizing(false);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 4000);
+      }
+    };
+
+    frameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(frameId);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const processError = validateProcesses(selectedProcesses);
+    const employeeError = validateEmployees(
+      selectedEmployees,
+      selectedProcesses
+    );
+
+    if (!!processError || !!employeeError) {
+      setErrorMessage({ process: processError, employee: employeeError });
+      setIsValid({ process: !processError, employee: !employeeError });
+      return;
+    }
+    setErrorMessage({ process: null, employee: null });
+    setIsValid({ process: false, employee: false });
+    startRandomization();
+  };
+
+  const reset = () => {
+    setSelectedProcesses([]);
+    setSelectedEmployees([]);
+    setResultList([]);
+  };
+
+  return (
+    <main>
+      <Stack className="container min-vh-100 align-items-center justify-content-center">
+        <Card>
+          <Card.Body className="d-grid gap-4">
+            <Card.Title as="h1">Process Randomizer</Card.Title>
+            <Card.Text>
+              To select a process or employee, you can choose from a list or
+              manually enter values. To add multiple values simultaneously,
+              separate them with a comma.
+            </Card.Text>
+
+            <RandomizerForm
+              processList={processList}
+              employeeList={employeeList}
+              selectedProcesses={selectedProcesses}
+              setSelectedProcesses={handleSelectProcesses}
+              selectedEmployees={selectedEmployees}
+              setSelectedEmployees={setSelectedEmployees}
+              setResultList={setResultList}
+              isValid={isValid}
+              setIsValid={setIsValid}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+              handleSubmit={handleSubmit}
+              isRandomizing={isRandomizing}
+              reset={reset}
             />
-          )}
-          <ResultsTable data={randomValues} />
-        </BackgroundCard>
+
+            <ResultTable resultList={resultList} />
+
+            {showConfetti && <Confetti />}
+          </Card.Body>
+        </Card>
       </Stack>
-    </Stack>
+    </main>
   );
 };
 
