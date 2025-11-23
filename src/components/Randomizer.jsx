@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import db from './db.json';
+import db from '../db.json';
 import { Card, Stack } from 'react-bootstrap';
 import { nanoid } from 'nanoid';
 import { validateEmployees, validateProcesses } from 'utils/validation';
-import RandomizerForm from './RandomizerForm';
+import DistributionForm from './DistributionForm';
 import Confetti from './Confetti';
 import ResultTable from './ResultTable';
+import { use } from 'react';
 
 const animationDuration = 5800;
 
@@ -45,9 +46,11 @@ const Randomizer = () => {
 
   const [isRandomizing, setIsRandomizing] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const data = await new Promise(resolve =>
           setTimeout(() => resolve(db), 2000)
@@ -55,7 +58,9 @@ const Randomizer = () => {
 
         setProcessList(data.processes);
         setEmployeeList(data.employees);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.error('Error loading data:', error);
       }
     };
@@ -140,35 +145,39 @@ const Randomizer = () => {
     <main>
       <Stack className="container min-vh-100 align-items-center justify-content-center">
         <Card>
-          <Card.Body className="d-grid gap-4">
-            <Card.Title as="h1">Process Randomizer</Card.Title>
-            <Card.Text>
-              To select a process or employee, you can choose from a list or
-              manually enter values. To add multiple values simultaneously,
-              separate them with a comma.
-            </Card.Text>
+          {isLoading ? (
+            <Card.Body>Loading data...</Card.Body>
+          ) : (
+            <Card.Body className="d-grid gap-4">
+              <Card.Title as="h1">Process Randomizer</Card.Title>
+              <Card.Text>
+                To select a process or employee, you can choose from a list or
+                manually enter values. To add multiple values simultaneously,
+                separate them with a comma.
+              </Card.Text>
 
-            <RandomizerForm
-              processList={processList}
-              employeeList={employeeList}
-              selectedProcesses={selectedProcesses}
-              setSelectedProcesses={handleSelectProcesses}
-              selectedEmployees={selectedEmployees}
-              setSelectedEmployees={setSelectedEmployees}
-              setResultList={setResultList}
-              isValid={isValid}
-              setIsValid={setIsValid}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-              handleSubmit={handleSubmit}
-              isRandomizing={isRandomizing}
-              reset={reset}
-            />
+              <DistributionForm
+                processList={processList}
+                employeeList={employeeList}
+                selectedProcesses={selectedProcesses}
+                setSelectedProcesses={handleSelectProcesses}
+                selectedEmployees={selectedEmployees}
+                setSelectedEmployees={setSelectedEmployees}
+                setResultList={setResultList}
+                isValid={isValid}
+                setIsValid={setIsValid}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                handleSubmit={handleSubmit}
+                isRandomizing={isRandomizing}
+                reset={reset}
+              />
 
-            <ResultTable resultList={resultList} />
+              <ResultTable resultList={resultList} />
 
-            {showConfetti && <Confetti />}
-          </Card.Body>
+              {showConfetti && <Confetti />}
+            </Card.Body>
+          )}
         </Card>
       </Stack>
     </main>
