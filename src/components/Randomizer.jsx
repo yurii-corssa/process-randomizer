@@ -6,7 +6,6 @@ import { validateEmployees, validateProcesses } from 'utils/validation';
 import DistributionForm from './DistributionForm';
 import Confetti from './Confetti';
 import ResultTable from './ResultTable';
-import { use } from 'react';
 
 const animationDuration = 5800;
 
@@ -149,29 +148,33 @@ const Randomizer = () => {
             <Card.Body>Loading data...</Card.Body>
           ) : (
             <Card.Body className="d-grid gap-4">
-              <Card.Title as="h1">Process Randomizer</Card.Title>
-              <Card.Text>
-                To select a process or employee, you can choose from a list or
-                manually enter values. To add multiple values simultaneously,
-                separate them with a comma.
-              </Card.Text>
+              <div>
+                <Card.Title as="h1">Process Randomizer</Card.Title>
+                <Card.Text>
+                  To select a process or employee, you can choose from a list or
+                  manually enter values. To add multiple values simultaneously,
+                  separate them with a comma.
+                </Card.Text>
 
-              <DistributionForm
-                processList={processList}
-                employeeList={employeeList}
-                selectedProcesses={selectedProcesses}
-                setSelectedProcesses={handleSelectProcesses}
-                selectedEmployees={selectedEmployees}
-                setSelectedEmployees={setSelectedEmployees}
-                setResultList={setResultList}
-                isValid={isValid}
-                setIsValid={setIsValid}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-                handleSubmit={handleSubmit}
-                isRandomizing={isRandomizing}
-                reset={reset}
-              />
+                <DistributionForm
+                  processList={processList}
+                  employeeList={employeeList}
+                  selectedProcesses={selectedProcesses}
+                  setSelectedProcesses={handleSelectProcesses}
+                  selectedEmployees={selectedEmployees}
+                  setSelectedEmployees={setSelectedEmployees}
+                  setResultList={setResultList}
+                  isValid={isValid}
+                  setIsValid={setIsValid}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  handleSubmit={handleSubmit}
+                  isRandomizing={isRandomizing}
+                  reset={reset}
+                />
+              </div>
+
+              <div className="vr"></div>
 
               <ResultTable resultList={resultList} />
 
