@@ -3,10 +3,36 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'react-bootstrap-typeahead/css/Typeahead.css';
 
+@font-face {
+  font-family: 'Geist';
+  src: local('Geist-Regular'),
+    url('../../public/fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: local('Geist-Black'),
+    url('../../public/fonts/Geist-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GeistMono';
+  src: local('GeistMono-Regular'),
+    url('../../public/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .card-body {
   position: relative;
   grid-template-columns: minmax(auto, 1fr) min-content minmax(max-content, 1fr);
-  // letter-spacing: 0.05em;
   backdrop-filter: blur(20px);
   background-image: url('https://i.ibb.co/5RSd0Nk/whitenoise-361x370.png');
   box-shadow: inset -1px 0px 2px rgba(255, 255, 255, 0.25),
@@ -35,12 +61,11 @@
 }
 
 .card-title {
-  letter-spacing: initial;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
 .card-text {
-  text-wrap: balance;
   text-transform: uppercase;
 }
 
@@ -57,10 +82,35 @@
 .form-label,
 .result-cell:nth-child(-n + 3) {
   font-family: $headings-font-family;
-  letter-spacing: initial;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
 .rbt:has(:disabled) {
   opacity: 0.65;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+
+  &__text {
+    display: inline-block;
+    font-size: calc(100lvh / var(--rows-count, 2));
+    line-height: 1;
+    font-family: $headings-font-family;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: rgba($light, 0.2);
+    margin: 0;
+    overflow: hidden;
+
+    &::first-letter {
+      color: rgba($primary, 0.8);
+    }
+  }
+
+  .rfm-child {
+    display: flex;
+  }
 }
