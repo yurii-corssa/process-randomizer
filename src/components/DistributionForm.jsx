@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import FormButton from './FormButton';
+import FormButtons from './FormButtons';
 import ComboInput from './ComboInput';
 
 const DistributionForm = ({
@@ -84,7 +84,7 @@ const DistributionForm = ({
         </Form.Group>
       </Form>
 
-      <FormButton reset={reset} isRandomizing={isRandomizing} />
+      <FormButtons reset={reset} isRandomizing={isRandomizing} />
     </>
   );
 };
