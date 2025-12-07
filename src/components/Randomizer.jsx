@@ -6,6 +6,8 @@ import { validateEmployees, validateProcesses } from 'utils/validation';
 import DistributionForm from './DistributionForm';
 import Confetti from './Confetti';
 import ResultTable from './ResultTable';
+import Background from './Background';
+import ReactParallaxTilt from 'react-parallax-tilt';
 
 const animationDuration = 5800;
 
@@ -143,45 +145,62 @@ const Randomizer = () => {
   return (
     <main>
       <Stack className="container min-vh-100 align-items-center justify-content-center">
-        <Card>
-          {isLoading ? (
-            <Card.Body>Loading data...</Card.Body>
-          ) : (
-            <Card.Body className="d-grid gap-4">
-              <div>
-                <Card.Title as="h1">Process Randomizer</Card.Title>
-                <Card.Text>
-                  To select a process or employee, you can choose from a list or
-                  manually enter values. To add multiple values simultaneously,
-                  separate them with a comma.
-                </Card.Text>
+        <Background
+          text="Dispatch"
+          rowsCount={5}
+          animationDuration={animationDuration}
+          isRandomizing={isRandomizing}
+        />
 
-                <DistributionForm
-                  processList={processList}
-                  employeeList={employeeList}
-                  selectedProcesses={selectedProcesses}
-                  setSelectedProcesses={handleSelectProcesses}
-                  selectedEmployees={selectedEmployees}
-                  setSelectedEmployees={setSelectedEmployees}
-                  setResultList={setResultList}
-                  isValid={isValid}
-                  setIsValid={setIsValid}
-                  errorMessage={errorMessage}
-                  setErrorMessage={setErrorMessage}
-                  handleSubmit={handleSubmit}
-                  isRandomizing={isRandomizing}
-                  reset={reset}
-                />
-              </div>
+        <ReactParallaxTilt
+          tiltMaxAngleX={4}
+          tiltMaxAngleY={2}
+          glareEnable={true}
+          glareMaxOpacity={0.25}
+          glareBorderRadius={'0.375rem'}
+          glarePosition={'top'}
+          trackOnWindow={true}
+        >
+          <Card>
+            {isLoading ? (
+              <Card.Body>Loading data...</Card.Body>
+            ) : (
+              <Card.Body className="d-grid gap-4">
+                <div>
+                  <Card.Title as="h1">Process Randomizer</Card.Title>
+                  <Card.Text>
+                    To select a process or employee, you can choose from a list
+                    or manually enter values. To add multiple values
+                    simultaneously, separate them with a comma.
+                  </Card.Text>
 
-              <div className="vr"></div>
+                  <DistributionForm
+                    processList={processList}
+                    employeeList={employeeList}
+                    selectedProcesses={selectedProcesses}
+                    setSelectedProcesses={handleSelectProcesses}
+                    selectedEmployees={selectedEmployees}
+                    setSelectedEmployees={setSelectedEmployees}
+                    setResultList={setResultList}
+                    isValid={isValid}
+                    setIsValid={setIsValid}
+                    errorMessage={errorMessage}
+                    setErrorMessage={setErrorMessage}
+                    handleSubmit={handleSubmit}
+                    isRandomizing={isRandomizing}
+                    reset={reset}
+                  />
+                </div>
 
-              <ResultTable resultList={resultList} />
+                <div className="vr"></div>
 
-              {showConfetti && <Confetti />}
-            </Card.Body>
-          )}
-        </Card>
+                <ResultTable resultList={resultList} />
+
+                {showConfetti && <Confetti />}
+              </Card.Body>
+            )}
+          </Card>
+        </ReactParallaxTilt>
       </Stack>
     </main>
   );

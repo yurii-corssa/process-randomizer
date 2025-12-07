@@ -14,7 +14,9 @@
     "react-bootstrap-typeahead": "^6.4.1",
     "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.1.0",
+    "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.0.1",
+    "react-parallax-tilt": "^1.7.315",
     "react-scripts": "5.0.1",
     "sass": "^1.69.7",
     "web-vitals": "^2.1.3"
